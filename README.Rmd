@@ -86,7 +86,7 @@ summary(nPL)
 ```
 * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table) 
 ```{r}
-#there is an error here but I dont know what it is
+
 wild.metadata <- read.table(file="wild.metadata.txt", header=T)
 sortbyet<-wild.metadata[order(metadata$ET),]
 sortbyet[1:5,]
