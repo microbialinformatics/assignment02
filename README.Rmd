@@ -118,7 +118,7 @@ count from 1 to 100 by 3's.
 ```
 seq(1,100,3)
 ```
-repeat a b 10 times.
+repeat vector containing a b, 10 times.
 ```
 rep(c("a","b"),10)
 ```
