@@ -20,7 +20,7 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
-  Answer: 111
+#Answer: 111
 ```{r}
 ## getting summary information
 summary(metadata)
@@ -37,7 +37,7 @@ ncol(metadata)
 colnames(metadata)
 ```
 * How many mice weighed 15 or more grams?
-Answer: There are 77 observations from 31 mice with weights greater than or equal to 15 grams
+#Answer: There are 77 observations from 31 mice with weights greater than or equal to 15 grams
 ```{r}
 # There are repeat measurements for the same mouse
 #First, assess how many individual mice are in the file
@@ -60,13 +60,13 @@ unique(uniquebigmice)
      ```
 ```
 What is the median weight for the mice sampled?
-Answer: median weight among all observations is 16g
+#Answer: median weight among all observations is 16g
 ```{r}
 #assuming this means meadian over all weight observations
 median(metadata$Weight)
 ```
 * How many PMG mice were there?
-Answer: There are 53 observations of PMG from 23 mice
+#Answer: There are 53 observations of PMG from 23 mice
 ```{r}
 #using summary feature to look at number in SP categories
 summary(metadata)
@@ -78,7 +78,7 @@ sortnPMG
 unique(sortnPMG)
 ```
 * How many female PL mice were there?
-Answer: There are 24 female PL mice
+#Answer: There are 24 female PL mice
 ```{r}
 nPL<- metadata[ which(metadata$SP=='PL'), ]
 nPL
@@ -106,7 +106,7 @@ byweight
 ```
 * The `Station` column indicates where the mice were sampled. Where were the most mice captured? 
 * How many mice were captured there?
-Answer: N20, 4 mice.
+#Answer: N20, 4 mice.
 ```{r}
 summary(metadata$Station)
 ```
@@ -138,7 +138,7 @@ metadata[metadata$weight==16 && metadata$SP=="PMG",]
 
 
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
-Answer: the weight is bimodal with 16 and 17 both occuring 12 times.
+#Answer: the weight is bimodal with 16 and 17 both occuring 12 times.
 ```{r}
 #make variable containing a table with the weights as the lables and number of observations for each label in a vector.
 weightfreq<- table(as.vector(metadata$Weight))
