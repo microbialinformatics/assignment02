@@ -1,11 +1,12 @@
 ---
+
 title: "Assignment 2"
 author: "Shawn Whitefield"
 date: "September 16, 2014"
 output:
   html_document:
     keep_md: yes
-  pdf_document: default
+  
 ---
 
 Complete the exercises listed below and submit as a pull request to the [Assignment 2 repository](http://www.github.com/microbialinformatics/assignment02).  Format this document approapriately using R markdown and knitr. I would like to see your code blocks and output in the final documents you submit. Your pull request needs to include your *.Rmd and *.md files. Do not alter the `.gitignore` file. You may work with a partner, but you must submit your own assignment and give credit to anyone that worked with you on the assignment.
