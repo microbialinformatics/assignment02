@@ -200,7 +200,6 @@ weightfreq
 modes<-names (weightfreq) [weightfreq == max(weightfreq)]
 modes
 ```
-
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 ```{r}
 #make subset table without Ear and Repro
