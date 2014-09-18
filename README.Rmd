@@ -75,9 +75,12 @@ Answer: There are 77 observations from `r uniquemice` mice with weights greater 
 What is the median weight for the mice sampled?
 ```{r}
 #assuming this means meadian over all weight observations
-median(metadata$Weight)
+medianmouseweight<-median(metadata$Weight)
+medianmouseweight
 ```
-Answer: median weight among all observations is 16g
+Answer: median weight among all observations is `r medianmouseweight`
+
+
 ```{r}
 
 ```
@@ -91,8 +94,9 @@ nPMG<- metadata[ which(metadata$SP=='PMG'), ]
 sortnPMG<- sort(nPMG$ET)
 sortnPMG
 unique(sortnPMG)
+nPMGmice<-length(unique(sortnPMG))
 ```
-Answer: There are 53 observations of PMG from 23 mice
+Answer: There are 53 observations of PMG from `r nPMGmice` mice
 ```{r}
 
 ```
