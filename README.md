@@ -14,7 +14,7 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
-  Answer: 111
+Answer: 111
 
 ```r
 ## getting summary information
@@ -692,7 +692,7 @@ count from 1 to 100 by 3's.
 ```
 seq(1,100,3)
 ```
-repeat a b 10 times.
+repeat vector containing a b, 10 times.
 ```
 rep(c("a","b"),10)
 ```

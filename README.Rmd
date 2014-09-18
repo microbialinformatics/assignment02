@@ -20,7 +20,7 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
-Answer: 111
+
 ```{r}
 ## getting summary information
 summary(metadata)
@@ -28,6 +28,8 @@ summary(metadata)
 nrow(metadata)
 
 ```
+ Answer: there are 111 samples in wild.metadata.txt.
+ 
  * How many columns are in the table? What are their names?
 
 ```{r}
@@ -36,6 +38,8 @@ ncol(metadata)
 #getting column names
 colnames(metadata)
 ```
+Answer: There are 9 columns. They are called; "Date"    "ET"      "Station" "SP"      "Sex"     "Age"     "Repro"   "Weight"  "Ear"
+
 * How many mice weighed 15 or more grams?
 Answer: There are 77 observations from 31 mice with weights greater than or equal to 15 grams
 ```{r}
