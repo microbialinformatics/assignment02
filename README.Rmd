@@ -125,8 +125,10 @@ Answer: There are `r num ` female PL mice
 ```{r}
 wild.metadata <- read.table(file="wild.metadata.txt", header=T)
 sortbyet<-wild.metadata[order(metadata$ET),]
-sortbyet[1:5,]
+first5<-sortbyet[1:5,]
+first5
 ```
+Answer: `r first5`
 
 * Sort the table by the weight of each animal
 ```{r}
@@ -142,9 +144,23 @@ byweight
 * The `Station` column indicates where the mice were sampled. Where were the most mice captured? 
 * How many mice were captured there?
 ```{r}
-summary(metadata$Station)
+#get station observations
+stationsum<-summary(metadata$Station)
+#check work
+stationsum
+#sort to find largest number
+sortedstationsum<-sort(stationsum)
+#check work
+sortedstationsum
+#get last obs.
+mostcaptured<-sortedstationsum["N20"]
+#check work
+mostcaptured
+station<-names(mostcaptured)
+numberN20<-print(unname(mostcaptured))
+numberN20
 ```
-Answer: N20, 4 mice.
+Answer: `r station`, `r numberN20`.
 ```{r}
 
 ```
