@@ -126,9 +126,9 @@ Answer: There are `r num ` female PL mice
 wild.metadata <- read.table(file="wild.metadata.txt", header=T)
 sortbyet<-wild.metadata[order(metadata$ET),]
 first5<-sortbyet[1:5,]
+#printing first 5 rows of table
 first5
 ```
-Answer: `r first5`
 
 * Sort the table by the weight of each animal
 ```{r}
