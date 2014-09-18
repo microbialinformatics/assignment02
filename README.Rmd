@@ -170,28 +170,25 @@ Answer: `r station`, `r numberN20`.
 
 ```
 count from 1 to 100 by 3's.
-```
+```{r}
 seq(1,100,3)
 ```
-repeat vector containing a b, 10 times.
-```
+repeat vector containing concatenated a b, 10 times.
+```{r}
 rep(c("a","b"),10)
 ```
 give 10 numbers from 0 to 1 (from the uniform dist.) and put them in order
-```
+```{r}
 r <- runif(10); order(r)
 ```
 Maybe this should be %*% instead of %? This is for matrix multiplication, so multiplying matrix with 100 by matrix with 3. 
-```
+```{r}
 100 %*% 3
 ```
-Weight needs to have a capital W for the variable name. 
-metadata[metadata$Weight==12 & metadata$SP=="PMG",]
+In metadata, find all of the observations where the weight is equal to 16 and SP is PMG.Weight needs to have a capital W for the variable name. 
+```{r}
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 ```
-metadata[metadata$weight==16 && metadata$SP=="PMG",]
-```
-
-
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
 Answer: the weight is bimodal with 16 and 17 both occuring 12 times.
 ```{r}
