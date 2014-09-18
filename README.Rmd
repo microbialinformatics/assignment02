@@ -160,7 +160,7 @@ station<-names(mostcaptured)
 numberN20<-print(unname(mostcaptured))
 numberN20
 ```
-Answer: `r station`, `r numberN20`.
+Answer: station `r station` had the most, with `r numberN20` mice captured there.
 ```{r}
 
 ```
@@ -185,12 +185,12 @@ Maybe this should be %*% instead of %? This is for matrix multiplication, so mul
 ```{r}
 100 %*% 3
 ```
-In metadata, find all of the observations where the weight is equal to 16 and SP is PMG.Weight needs to have a capital W for the variable name. 
+In metadata, find all of the observations where the weight is equal to 16 and SP is PMG. Weight needs to have a capital W for the variable name. 
 ```{r}
 metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 ```
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
-Answer: the weight is bimodal with `r modes` both occuring 12 times.
+Answer: the weight is bimodal with ` r vmodes` both occuring 12 times.
 ```{r}
 #make variable containing a table with the weights as the lables and number of observations for each label in a vector.
 weightfreq<- table(as.vector(metadata$Weight))
@@ -198,7 +198,9 @@ weightfreq<- table(as.vector(metadata$Weight))
 weightfreq
 #ask for the names with the maximum frequency in the weightfreq vector.
 modes<-names (weightfreq) [weightfreq == max(weightfreq)]
-modes
+#make this into a vector so I can put it in my answer
+vmodes<-as.vector(modes)
+vmodes
 ```
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 ```{r}

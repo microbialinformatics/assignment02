@@ -421,7 +421,9 @@ Answer: There are 24 female PL mice
 ```r
 wild.metadata <- read.table(file="wild.metadata.txt", header=T)
 sortbyet<-wild.metadata[order(metadata$ET),]
-sortbyet[1:5,]
+first5<-sortbyet[1:5,]
+#printing first 5 rows of table
+first5
 ```
 
 ```
@@ -681,7 +683,10 @@ byweight
 * How many mice were captured there?
 
 ```r
-summary(metadata$Station)
+#get station observations
+stationsum<-summary(metadata$Station)
+#check work
+stationsum
 ```
 
 ```
@@ -698,36 +703,120 @@ summary(metadata$Station)
 ##  P15  P16  P17   P2   P5   P6   P7 
 ##    2    1    1    2    1    3    1
 ```
-Answer: N20, 4 mice.
+
+```r
+#sort to find largest number
+sortedstationsum<-sort(stationsum)
+#check work
+sortedstationsum
+```
+
+```
+##  A13   A2   A3 AA10 AA18 AA20  AA6  B19   B3   B4   B6   B8 BB18  CC4  D13 
+##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
+##  D17  D20   D3   D7   D8   E2   E3   F1  F17  F19   F2   F8  H18   H4   H6 
+##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
+##  I11  I12   I6   J1  J10  J15  J16  J17  J20   J6  K19  L15  L16  L18  L20 
+##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
+##   L7  M16  M17  M18   M8   M9   N1  N16  N17   N2   N3   P1  P13  P16  P17 
+##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
+##   P5   P7  A12 AA13  B16   B2  CC5  L11  L19  N19   N4  P11  P15   P2  B18 
+##    1    1    2    2    2    2    2    2    2    2    2    2    2    2    3 
+## CC13  CC2  CC3  CC6  H20   P6  N20 
+##    3    3    3    3    3    3    4
+```
+
+```r
+#get last obs.
+mostcaptured<-sortedstationsum["N20"]
+#check work
+mostcaptured
+```
+
+```
+## N20 
+##   4
+```
+
+```r
+station<-names(mostcaptured)
+numberN20<-print(unname(mostcaptured))
+```
+
+```
+## [1] 4
+```
+
+```r
+numberN20
+```
+
+```
+## [1] 4
+```
+Answer: N20, 4.
 
 
 2.  Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
 count from 1 to 100 by 3's.
-```
+
+```r
 seq(1,100,3)
 ```
-repeat vector containing a b, 10 times.
+
 ```
+##  [1]   1   4   7  10  13  16  19  22  25  28  31  34  37  40  43  46  49
+## [18]  52  55  58  61  64  67  70  73  76  79  82  85  88  91  94  97 100
+```
+repeat vector containing concatenated a b, 10 times.
+
+```r
 rep(c("a","b"),10)
 ```
-give 10 numbers from 0 to 1 (from the uniform dist.) and put them in order
+
 ```
+##  [1] "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a"
+## [18] "b" "a" "b"
+```
+give 10 numbers from 0 to 1 (from the uniform dist.) and put them in order
+
+```r
 r <- runif(10); order(r)
 ```
-Maybe this should be %*% instead of %? This is for matrix multiplication, so multiplying matrix with 100 by matrix with 3. 
+
 ```
+##  [1]  5  9  1  2 10  3  6  7  4  8
+```
+Maybe this should be %*% instead of %? This is for matrix multiplication, so multiplying matrix with 100 by matrix with 3. 
+
+```r
 100 %*% 3
 ```
-Weight needs to have a capital W for the variable name. 
-metadata[metadata$Weight==12 & metadata$SP=="PMG",]
+
 ```
-metadata[metadata$weight==16 && metadata$SP=="PMG",]
+##      [,1]
+## [1,]  300
+```
+In metadata, find all of the observations where the weight is equal to 16 and SP is PMG.Weight needs to have a capital W for the variable name. 
+
+```r
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 ```
 
-
+```
+##         Date ET Station  SP Sex Age Repro Weight Ear
+## 5_31m11 5_31 11      F2 PMG   F   J    NT     16  18
+## 6_15m16 6_15 16     L11 PMG   M   A   SCR     16  17
+## 6_1m12   6_1 12     H18 PMG   M   A   SCR     16  14
+## 6_30m43 6_30 43    CC13 PMG   F   J     N     16  15
+## 6_5m16   6_5 16     H20 PMG   M   A   SCR     16  16
+## 7_14m59 7_14 59     CC3 PMG   M  SA   SCR     16  17
+## 7_2m25   7_2 25     P17 PMG   F   A    NE     16  15
+## 7_3m43   7_3 43    CC13 PMG   F  SA    NT     16  16
+```
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
-Answer: the weight is bimodal with 16 and 17 both occuring 12 times.
+Answer: the weight is bimodal with ` r vmodes` both occuring 12 times.
 
 ```r
 #make variable containing a table with the weights as the lables and number of observations for each label in a vector.
@@ -748,13 +837,15 @@ weightfreq
 
 ```r
 #ask for the names with the maximum frequency in the weightfreq vector.
-names (weightfreq) [weightfreq == max(weightfreq)]
+modes<-names (weightfreq) [weightfreq == max(weightfreq)]
+#make this into a vector so I can put it in my answer
+vmodes<-as.vector(modes)
+vmodes
 ```
 
 ```
 ## [1] "16" "17"
 ```
-
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
 ```r
