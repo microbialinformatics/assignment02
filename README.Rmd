@@ -39,9 +39,11 @@ ncol(metadata)
 colnames(metadata)
 ```
 Answer: There are 9 columns. They are called; "Date"    "ET"      "Station" "SP"      "Sex"     "Age"     "Repro"   "Weight"  "Ear"
+```{r}
+
+```
 
 * How many mice weighed 15 or more grams?
-Answer: There are 77 observations from 31 mice with weights greater than or equal to 15 grams
 ```{r}
 # There are repeat measurements for the same mouse
 #First, assess how many individual mice are in the file
@@ -63,14 +65,21 @@ uniquebigmice<- sort(weightet$ET)
 unique(uniquebigmice)
      ```
 ```
+Answer: There are 77 observations from 31 mice with weights greater than or equal to 15 grams
+```{r}
+
+```
+
 What is the median weight for the mice sampled?
-Answer: median weight among all observations is 16g
 ```{r}
 #assuming this means meadian over all weight observations
 median(metadata$Weight)
 ```
+Answer: median weight among all observations is 16g
+```{r}
+
+```
 * How many PMG mice were there?
-Answer: There are 53 observations of PMG from 23 mice
 ```{r}
 #using summary feature to look at number in SP categories
 summary(metadata)
@@ -81,20 +90,27 @@ sortnPMG<- sort(nPMG$ET)
 sortnPMG
 unique(sortnPMG)
 ```
+Answer: There are 53 observations of PMG from 23 mice
+```{r}
+
+```
+
 * How many female PL mice were there?
-Answer: There are 24 female PL mice
 ```{r}
 nPL<- metadata[ which(metadata$SP=='PL'), ]
 nPL
 summary(nPL)
 ```
-* Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table) 
+Answer: There are 24 female PL mice
 ```{r}
 
+```
+
+* Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table) 
+```{r}
 wild.metadata <- read.table(file="wild.metadata.txt", header=T)
 sortbyet<-wild.metadata[order(metadata$ET),]
 sortbyet[1:5,]
-
 ```
 
 * Sort the table by the weight of each animal
@@ -110,10 +126,14 @@ byweight
 ```
 * The `Station` column indicates where the mice were sampled. Where were the most mice captured? 
 * How many mice were captured there?
-Answer: N20, 4 mice.
 ```{r}
 summary(metadata$Station)
 ```
+Answer: N20, 4 mice.
+```{r}
+
+```
+
 2.  Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 ```{r}
 
