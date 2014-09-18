@@ -1,0 +1,40 @@
+---
+title: "metadata_calculations"
+author: "Caroline Van Steendam"
+date: "Thursday, September 18, 2014"
+output: html_document
+---
+
+
+Setting up data-table:
+
+```{r}
+metadata <- read.table(file="wild.metadata.txt", header=T)
+rownames(metadata) <- metadata$Group
+metadata <- metadata[,-1]
+```
+
+First three questions:
+```{r}
+AmountOfSamples <- nrow(metadata)
+AmountOfColumns <- ncol(metadata)
+NamesOfColumns <- colnames(metadata)
+```
+
+The amount of samples is now equal to 'r AmountOfSamples'.
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
