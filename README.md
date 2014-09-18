@@ -14,7 +14,7 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
-Answer: 111
+
 
 ```r
 ## getting summary information
@@ -42,18 +42,21 @@ summary(metadata)
 
 ```r
 # getting number of observations in metadata file
-nrow(metadata)
+obs <-nrow(metadata)
+obs
 ```
 
 ```
 ## [1] 111
 ```
+ Answer: there are 111 samples in wild.metadata.txt.
+ 
  * How many columns are in the table? What are their names?
-
 
 ```r
 #getting column number
-ncol(metadata)
+columns<-ncol(metadata)
+columns
 ```
 
 ```
@@ -62,15 +65,12 @@ ncol(metadata)
 
 ```r
 #getting column names
-colnames(metadata)
+metadatanames<-colnames(metadata)
 ```
+Answer: There are 9. They are called; Date, ET, Station, SP, Sex, Age, Repro, Weight, Ear
 
-```
-## [1] "Date"    "ET"      "Station" "SP"      "Sex"     "Age"     "Repro"  
-## [8] "Weight"  "Ear"
-```
+
 * How many mice weighed 15 or more grams?
-Answer: There are 77 observations from 31 mice with weights greater than or equal to 15 grams
 
 ```r
 # There are repeat measurements for the same mouse
@@ -250,8 +250,10 @@ unique(uniquebigmice)
 ## 49 Levels: 1 2 3 4 7 9 10 11 12 13 14 15 16 18 19 20 21 24 25 27 28 ... 80
 ```
 ```
+Answer: There are 77 observations from 31 mice with weights greater than or equal to 15 grams
+
+
 What is the median weight for the mice sampled?
-Answer: median weight among all observations is 16g
 
 ```r
 #assuming this means meadian over all weight observations
@@ -261,8 +263,9 @@ median(metadata$Weight)
 ```
 ## [1] 16
 ```
+Answer: median weight among all observations is 16g
+
 * How many PMG mice were there?
-Answer: There are 53 observations of PMG from 23 mice
 
 ```r
 #using summary feature to look at number in SP categories
@@ -311,8 +314,10 @@ unique(sortnPMG)
 ##  [1] 7  11 12 13 15 16 19 21 24 25 33 34 35 38 43 46 51 52 59 64 74 77 79
 ## 49 Levels: 1 2 3 4 7 9 10 11 12 13 14 15 16 18 19 20 21 24 25 27 28 ... 80
 ```
+Answer: There are 53 observations of PMG from 23 mice
+
+
 * How many female PL mice were there?
-Answer: There are 24 female PL mice
 
 ```r
 nPL<- metadata[ which(metadata$SP=='PL'), ]
@@ -403,6 +408,9 @@ summary(nPL)
 ##  Max.   :30.0   Max.   :18.0  
 ## 
 ```
+Answer: There are 24 female PL mice
+
+
 * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table) 
 
 ```r
@@ -666,7 +674,6 @@ byweight
 ```
 * The `Station` column indicates where the mice were sampled. Where were the most mice captured? 
 * How many mice were captured there?
-Answer: N20, 4 mice.
 
 ```r
 summary(metadata$Station)
@@ -686,6 +693,9 @@ summary(metadata$Station)
 ##  P15  P16  P17   P2   P5   P6   P7 
 ##    2    1    1    2    1    3    1
 ```
+Answer: N20, 4 mice.
+
+
 2.  Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
 count from 1 to 100 by 3's.

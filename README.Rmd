@@ -25,24 +25,24 @@ metadata <- metadata[,-1]
 ## getting summary information
 summary(metadata)
 # getting number of observations in metadata file
-nrow(metadata)
-
+obs <-nrow(metadata)
+obs
 ```
- Answer: there are 111 samples in wild.metadata.txt.
+ Answer: there are `r obs` samples in wild.metadata.txt.
  
  * How many columns are in the table? What are their names?
-
 ```{r}
 #getting column number
-ncol(metadata)
+columns<-ncol(metadata)
+columns
+
 #getting column names
-colnames(metadata)
+metadatanames<-colnames(metadata)
 ```
-Answer: There are 9 columns. They are called; "Date"    "ET"      "Station" "SP"      "Sex"     "Age"     "Repro"   "Weight"  "Ear"
+Answer: There are `r columns`. They are called; `r metadatanames`
 ```{r}
 
 ```
-
 * How many mice weighed 15 or more grams?
 ```{r}
 # There are repeat measurements for the same mouse
@@ -62,10 +62,12 @@ weightet
 levels(weightet$ET)
 #determine number of individual mice (ET) in weightet
 uniquebigmice<- sort(weightet$ET)
-unique(uniquebigmice)
+nunique<-unique(uniquebigmice)
+uniquemice<-length(unique(nunique))
+uniquemice
      ```
 ```
-Answer: There are 77 observations from 31 mice with weights greater than or equal to 15 grams
+Answer: There are 77 observations from `r uniquemice` mice with weights greater than or equal to 15 grams
 ```{r}
 
 ```
