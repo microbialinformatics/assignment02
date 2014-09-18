@@ -65,7 +65,7 @@ uniquebigmice<- sort(weightet$ET)
 nunique<-unique(uniquebigmice)
 uniquemice<-length(unique(nunique))
 uniquemice
-     ```
+    
 ```
 Answer: There are 77 observations from `r uniquemice` mice with weights greater than or equal to 15 grams
 ```{r}
@@ -103,11 +103,20 @@ Answer: There are 53 observations of PMG from `r nPMGmice` mice
 
 * How many female PL mice were there?
 ```{r}
+#selecting for SP = PL
 nPL<- metadata[ which(metadata$SP=='PL'), ]
+#checking work
 nPL
-summary(nPL)
+#getting summary of the Sex variable
+PLmousesex<-summary(nPL$Sex)
+#saving the summary of PL mouse Sex variable as a vector
+femalePL<-PLmousesex["F"]
+#checking work
+num<-print(unname(femalePL))
+num
+
 ```
-Answer: There are 24 female PL mice
+Answer: There are `r num ` female PL mice
 ```{r}
 
 ```

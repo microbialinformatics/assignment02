@@ -69,7 +69,6 @@ metadatanames<-colnames(metadata)
 ```
 Answer: There are 9. They are called; Date, ET, Station, SP, Sex, Age, Repro, Weight, Ear
 
-
 * How many mice weighed 15 or more grams?
 
 ```r
@@ -241,14 +240,13 @@ levels(weightet$ET)
 ```r
 #determine number of individual mice (ET) in weightet
 uniquebigmice<- sort(weightet$ET)
-unique(uniquebigmice)
+nunique<-unique(uniquebigmice)
+uniquemice<-length(unique(nunique))
+uniquemice
 ```
 
 ```
-##  [1] 1  2  4  7  9  10 11 12 13 16 20 21 24 25 27 28 33 34 35 36 37 38 43
-## [24] 44 46 52 53 56 57 59 61
-## 49 Levels: 1 2 3 4 7 9 10 11 12 13 14 15 16 18 19 20 21 24 25 27 28 ... 80
-```
+## [1] 31
 ```
 Answer: There are 77 observations from 31 mice with weights greater than or equal to 15 grams
 
@@ -257,13 +255,16 @@ What is the median weight for the mice sampled?
 
 ```r
 #assuming this means meadian over all weight observations
-median(metadata$Weight)
+medianmouseweight<-median(metadata$Weight)
+medianmouseweight
 ```
 
 ```
 ## [1] 16
 ```
-Answer: median weight among all observations is 16g
+Answer: median weight among all observations is 16
+
+
 
 * How many PMG mice were there?
 
@@ -314,13 +315,19 @@ unique(sortnPMG)
 ##  [1] 7  11 12 13 15 16 19 21 24 25 33 34 35 38 43 46 51 52 59 64 74 77 79
 ## 49 Levels: 1 2 3 4 7 9 10 11 12 13 14 15 16 18 19 20 21 24 25 27 28 ... 80
 ```
+
+```r
+nPMGmice<-length(unique(sortnPMG))
+```
 Answer: There are 53 observations of PMG from 23 mice
 
 
 * How many female PL mice were there?
 
 ```r
+#selecting for SP = PL
 nPL<- metadata[ which(metadata$SP=='PL'), ]
+#checking work
 nPL
 ```
 
@@ -387,26 +394,24 @@ nPL
 ```
 
 ```r
-summary(nPL)
+#getting summary of the Sex variable
+PLmousesex<-summary(nPL$Sex)
+#saving the summary of PL mouse Sex variable as a vector
+femalePL<-PLmousesex["F"]
+#checking work
+num<-print(unname(femalePL))
 ```
 
 ```
-##       Date          ET        Station     SP     Sex    Age     Repro   
-##  7_14   :10   2      : 7   CC6    : 3   PL :58   F:24   A :25   A  : 3  
-##  7_13   : 7   1      : 4   A12    : 2   PMG: 0   M:34   J :16   ABD: 7  
-##  6_15   : 6   9      : 4   AA13   : 2                   SA:17   N  : 1  
-##  7_2    : 6   57     : 4   CC5    : 2                           NE :12  
-##  7_3    : 6   20     : 3   H20    : 2                           NT :11  
-##  6_16   : 4   32     : 3   L19    : 2                           SCR:24  
-##  (Other):19   (Other):33   (Other):45                                   
-##      Weight          Ear      
-##  Min.   : 7.0   Min.   :11.0  
-##  1st Qu.:13.0   1st Qu.:14.0  
-##  Median :15.8   Median :15.0  
-##  Mean   :16.0   Mean   :14.7  
-##  3rd Qu.:18.0   3rd Qu.:16.0  
-##  Max.   :30.0   Max.   :18.0  
-## 
+## [1] 24
+```
+
+```r
+num
+```
+
+```
+## [1] 24
 ```
 Answer: There are 24 female PL mice
 
