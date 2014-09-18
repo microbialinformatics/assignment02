@@ -1,12 +1,3 @@
----
-title: "Assignment 2 Example"
-author: "Patrick D. Schloss"
-date: "September 15, 2014"
-output:
-  html_document:
-    keep_md: yes
----
-
 For your assignments, I would like you to integrate your answers with text while showing me the code that you used to generate the solution. So for example, if the question was, "How many mice were captured on 5_25?", I would expect to see something like...
 
 ```{r}
