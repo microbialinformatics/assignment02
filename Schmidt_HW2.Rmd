@@ -155,8 +155,8 @@ tableCat <- function(inFrame) {
 }
 ```
 
-```{r results='asis'}
-test <- newdata
+```{r results='asis'} 
+test <- newdata #My attempt on printing the table here.
 test <- tableCat(test)
 test <- cat(test, sep = "\n")
 ```

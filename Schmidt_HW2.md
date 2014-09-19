@@ -163,7 +163,7 @@ r <- runif(10); order(r)
 ```
 
 ```
-##  [1]  4  8 10  5  3  2  1  7  6  9
+##  [1]  7  9  4  6  3  8  1  2 10  5
 ```
 
 
@@ -217,7 +217,7 @@ write.csv(newdata, file = "metadata_exludes_Ear&Repro.csv")
 
 
 ```r
-test <- newdata
+test <- newdata #My attempt on printing the table here.
 test <- tableCat(test)
 test <- cat(test, sep = "\n")
 ```
