@@ -1,13 +1,13 @@
 ---
 title: "Assignment 2"
-author: "Patrick D. Schloss"
-date: "September 15, 2014"
+author: "Marian L. Schmidt"
+date: "September 18, 2014"
 output:
   html_document:
     keep_md: yes
 ---
 
-Complete the exercises listed below and submit as a pull request to the [Assignment 2 repository](http://www.github.com/microbialinformatics/assignment02).  Format this document approapriately using R markdown and knitr. I would like to see your code blocks and output in the final documents you submit. Your pull request needs to include your *.Rmd and *.md files. Do not alter the `.gitignore` file. You may work with a partner, but you must submit your own assignment and give credit to anyone that worked with you on the assignment.
+>Complete the exercises listed below and submit as a pull request to the [Assignment 2 repository](http://www.github.com/microbialinformatics/assignment02).  Format this document approapriately using R markdown and knitr. I would like to see your code blocks and output in the final documents you submit. Your pull request needs to include your *.Rmd and *.md files. Do not alter the `.gitignore` file. You may work with a partner, but you must submit your own assignment and give credit to anyone that worked with you on the assignment.
 
 ```{r}
 metadata <- read.table(file="wild.metadata.txt", header=T)
@@ -15,95 +15,151 @@ rownames(metadata) <- metadata$Group
 metadata <- metadata[,-1]
 ```
 
-1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
+*******************
+>**1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.**
 
-  * How many samples were described in the `wild.metadata.txt`?
-```{r} 
-length(unique(row.names(metadata)))
+
+  *  *How many samples were described in the `wild.metadata.txt`?*  
+```{r eval = TRUE}
+num_samps <- length(unique(row.names(metadata)))
 ```
+**Answer:** *There are `r num_samps` samples described in the wild.metadata.txt.*
   
-  * How many columns are in the table? What are their names
+   
+  *  *How many columns are in the table? What are their names*
 ```{r} 
-ncol(metadata)
-colnames(metadata)
-```  
+num_cols <- ncol(metadata)
+name_cols <- colnames(metadata)
+``` 
+ **Answer:** *There are `r num_cols` columns in the table.  The name of the columns are `r name_cols`.*
   
-  * How many mice weighed 15 or more grams?
+  *  *How many mice weighed 15 or more grams?*
 ```{r} 
-length(metadata$Weight[metadata$Weight < 15])
+weight15a <- length(metadata$Weight[metadata$Weight < 15])
 #OR
-sum(metadata$Weight<15)
+weight15b <- sum(metadata$Weight<15)
 ```  
-  
-  * What is the median weight for the mice sampled?
+**Answer:** *`r weight15a` mice weighed 15 grams or more.  Using the second line of code it is `r weight15b` .*
+   
+  *  *What is the median weight for the mice sampled?*
 ```{r} 
-median(metadata$Weight)
+median_weight <- median(metadata$Weight)
 ```  
- 
-  * How many PMG mice were there?
+**Answer:** *The median weight for the mice sampled is `r median_weight`.*
+
+  *  *How many PMG mice were there?*
 ```{r} 
-nrow(metadata[metadata$SP=="PMG",])
+num_PMG <- nrow(metadata[metadata$SP=="PMG",])
 ```    
-  
-  * How many female PL mice were there?
+ **Answer:** *The number of PMG mice sampled is `r num_PMG`.*
+ 
+  *  *How many female PL mice were there?*
 ```{r} 
-nrow(metadata[metadata$SP=="PMG" & metadata$Sex == "F",])
+female_PL <- nrow(metadata[metadata$SP=="PMG" & metadata$Sex == "F",])
 ```   
+**Answer:** *The number of female PL mice sampled is `r female_PL`.*
   
-  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+  *  *Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)*
 ```{r} 
 library(plyr)
 metadata  <- arrange(metadata, ET)
 head(metadata)
 ```
-  
-  * Sort the table by the weight of each animal
+ 
+  *  *Sort the table by the weight of each animal*
 ```{r} 
 metadata <- metadata[order(metadata$Weight), ]
+head(metadata)
 ```
   
-  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+  *  *The `Station` column indicates where the mice were sampled. Where were the most mice captured?*
 ```{r} 
-which.max(table(metadata$Station)) #The second row is the index of the value in the table
+which.max(table(metadata$Station)) #The second row in the output is the index of the value in the table
+station <- table(metadata$Station)
+station_mode <- station[70]; station_mode # The second row in the output is the number of samples at that station.
 ```  
+**Answer:** *The most mice were sampled at station N20.*
   
-  * How many mice were captured there?
+  *  *How many mice were captured there?*
 ```{r}
-max(table(metadata$Station))
+num_PMGmice <- max(table(metadata$Station))
 ```
+**Answer:** *`r num_PMGmice` were captured at N20.*
+ 
+***************************
+
+>**2.  Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.**
 
 
-2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
+*  **Answer:** The following command generates a sequence of numbers that is every 3rd number between 1 and 100.
 
-```
-The following command generates a sequence of numbers that is every 3rd number between 1 and 100.
-```
 ```{r}
 seq(1,100,3)
 ```
 
-```
-The following command first generates a sequence of "a" and "b" and then repeats it 10 times.
-```
+
+*  **Answer:** The following command first generates a sequence of "a" and "b" and then repeats it 10 times.
+
 ```{r}
 rep(c("a","b"),10)
 ```
 
-```
+*  **Answer:** The following commands are actually 2 lines of code separated by a semicolon.  The first line assigns a variable r, which are 10 random numbers from a uniform distribution.  The second function in the code (order(r)) tells us which element of the vector should be put 1st, 2nd, 3rd, and so on.  It is a way of telling us _how_ to sort the data.
+
+```{r}
 r <- runif(10); order(r)
 ```
 
+
+*  **Answer:** The following code was modified from "100 % 3" to "100 %% 3", as "100 % 3" showed an error "unexpected input in "100 % 3."  100 %% 3 is a modulus binary operator (100 mod 3).
+
+```{r}
+100 %% 3
 ```
-100 % 3
+
+*  **Answer:** The following code searches the rows of the metadata data frame for a mouse that is 16g that is species PMG.  First, the code creates a vector of trues/falses that say if the weight of the mouse is equal to 16g.  Second, another vector of trues and falses are created if the species is PMG.  Finally, both data frames are searched for matching "TRUE" values, which means there's a 16g mouse of species PMG.  For this combination, there's no match.
+
+```{r}
+metadata[metadata$Weight==16 && metadata$SP=="PMG",]
 ```
 
+**********************************
+
+>**3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`**
+
+```{r}
+weight <- metadata$Weight
+weight <- table(as.vector(weight))
+mode_weight <- names(weight)[weight == max(weight)]
 ```
-metadata[metadata$weight==16 && metadata$SP=="PMG",]
+**Answer:** *The mode for the weight of the mice is `r mode_weight`.*
+
+************************
+
+>**4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.**
+
+```{r}
+newdata <- metadata #Assign variable with metadata data frame
+newdata$Ear = NULL; newdata$Repro = NULL #Delete Ear and Repro columns
+write.csv(newdata, file = "metadata_exludes_Ear&Repro.csv")
+```
+
+```{r echo = FALSE}
+tableCat <- function(inFrame) {
+    outText <- paste(names(inFrame), collapse = " | ")
+    outText <- c(outText, paste(rep("---", ncol(inFrame)), collapse = " | "))
+    invisible(apply(inFrame, 1, function(inRow) {
+        outText <<- c(outText, paste(inRow, collapse = " | "))
+    }))
+    return(outText)
+}
+```
+
+```{r results='asis'}
+test <- newdata
+test <- tableCat(test)
+test <- cat(test, sep = "\n")
 ```
 
 
-3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
-
-
-4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
-
+************************
