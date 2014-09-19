@@ -4,8 +4,6 @@ author: "Caroline Van Steendam"
 date: "Thursday, September 18, 2014"
 output: html_document
 ---
-
-
 Setting up data-table:
 
 ```{r}
@@ -14,7 +12,9 @@ rownames(metadata) <- metadata$Group
 metadata <- metadata[,-1]
 ```
 
-The R-code chunk used to answer the first three questions:
+#### 1. Calculate the following on the data we read in from the wild.metadata.txt file that we discussed in class on 9/16/2014.
+
+*The R-code chunk used to answer the **first three questions**:*
 ```{r}
 AmountOfSamples <- nrow(metadata)
 AmountOfColumns <- ncol(metadata)
@@ -22,3 +22,83 @@ NamesOfColumns <- colnames(metadata)
 ```
 
 The amount of samples described in the *wild.metadata.txt* is equal to `r AmountOfSamples`. There are `r AmountOfColumns` columns present in this table, and their names are the following: `r NamesOfColumns`.
+
+*The R-code chunk used to answer the question regarding **heavy mice** is given below.* To calculate the amount of heavy mice (and not of simply all heavier samples, since some mice are sampled multiple times), we first need to calculate the mean weight for each mouse. The first two *for-loops* combined with the *if-loop* generate a new vector containing the mean weight of each separate mouse (having the same eartag). The last *if-loop* is inserted so that no 'zero' is added to this vector for eartags that do not occur in the data (e.g. number 6). Afterwards, it is easy to calculate the total amount of heavy mice.
+```{r}
+maxET <- max(metadata[,"ET"])
+MeanWeightPerMouse <- 0
+l <- 0
+# Go through all eartags.
+for (j in 1:maxET) {
+  TempWeightPerMouse <- 0
+  k <- 0
+  # For each eartag, go through all rows and look for recurring eartags. If there are multiple, save all separate weights into TWPM (the weight is also saved if an eartag only occurs once).
+  for (i in 1:AmountOfSamples) {
+    if (metadata[i, "ET"]==j){
+      k <- k + 1
+      TempWeightPerMouse[k] <- metadata[i, "Weight"]
+    }
+  }
+  # For each eartag, see if it is present in the list (k will be larger than 0) and take the mean of all weights of this mouse.
+  if (k > 0){
+    l <- l + 1
+    TempMean <- mean(TempWeightPerMouse)
+  }
+  # For each eartag, add the previously calculated mean to a new vector: MWPM.
+  MeanWeightPerMouse[l] <- TempMean
+}
+
+#Finally, the amount of mice with a weight higher than 15 is calculated, by simple counting.
+counter <- 0
+for(i in 1:length(MeanWeightPerMouse)){
+  if(MeanWeightPerMouse[i]>15) { 
+    counter <- counter + 1
+  } 
+}
+AmountOfHeavyMice <- counter
+```
+There are `r AmountOfHeavyMice` mice that weigh more than 15 grams.
+
+*The R-code chunk used to answer the question regarding **median weight** is shown below.* To calculate the median weight of all *mice* (and not *samples*), we use the previously generated vector 'MeanWeightPerMouse' which contains the mean weight for each mouse.
+```{r}
+MedianWeightofMice <-median(MeanWeightPerMouse)
+```
+The median weight of all sampled mice is now equal to `r MedianWeightofMice`. If we simply wanted to calculate the median weight of all samples, the following command would have sufficed:
+```{r}
+MedianWeightofAllSamples <- median(metadata$Weight)
+```
+(Which results -coincidentally- in the same value: `r MedianWeightofAllSamples`.)
+
+*The R-code chunk used to answer the question regarding **PMG mice**:*
+```{r}
+metadataPMG<-metadata[metadata$SP=="PMG",]
+AmountOfPMG <- nrow(metadataPMG)
+```
+There are `r AmountOfPMG` *PMG mice* present in the samples.
+
+*The R-code chunk used to answer the question regarding **female PL mice**:*
+```{r}
+metadataFPL<-metadata[metadata$SP=="PL" & metadata$Sex=="F",]
+AmountOfFemalePL <- nrow(metadataFPL)
+```
+The amount of *female PL mice* present in metadata is equal to `r AmountOfFemalePL`.
+
+*The R-code chunk used to **alphabetize the data by eartag number** is shown below.*
+```{r}
+metadataAlphaET <- matrix(nrow = )
+k <- 0
+# Go through all eartag-values, starting at the lowest value of 1.
+for (j in 1:maxET) {
+  # For each eartag, go through all rows and look for samples with the same eartag. Each time a sample is found that has this specific eartag, the corresponding row in metadata is added to a new matrix called 'metadataAlphaET'. 
+  for (i in 1:AmountOfSamples) {
+    if (metadata[i, "ET"] == j) {
+      k <- k + 1
+      metadataAlphaET[k,] <- metadata[i,]
+    }
+  }
+}
+# Show the top 5 rows of the new matrix metadataAlphaET.
+head(metadataAplhaET)
+```
+
+
