@@ -138,8 +138,53 @@ head(metadataSortWeight)
 ```
 *The R-code chunk used to answer the question regarding **most recurring station**:*
 ```{r}
-summ <- summary(metadata)
+summStation <- summary(metadata)
 ```
 The most recurring station, together with the amount of occurence, is equal to `r 
-summ[1,3]` times.
+summStation[1,3]` times.
 
+#### 2. Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
+
+The command *seq()* is used to generate regular sequences. In this case, a sequence of integers (decimals are also possible, as shown in previous discussion) is generated that starts at the value 1, ends at the value 100, and 'jumps' with a value of 3. 
+```{r}
+seq(1,100,3)
+```
+The command *rep()* is used to replicate a certain input (character, numberic,...) a specific of times (also input). The command *c()* is used to combine its arguments. This means that for this example, both the characters "a" and "b" are combined and then repeated for 10 times, creating a new vector.
+```{r}
+rep(c("a","b"),10)
+```
+The command *runif* provides information about the uniform distribution on an interval from min to max (min = lower limit of the distribution, max = upper limit and both need to be finite). In this example, no min nor max is given and therefore the default minimum of 0 and maximum of 1 is selected. The value '10' in the example stands for the number of observations, and 'r' is used to save the corresponding uniform distribution. The command *order* returns a vector in which the argument is rearranged into ascending order (default). The vector actually contains the seat-values of the argument, and not the actual values. I.e., when the previously determined vector *r* is ordered, a vector containing 10 integers from 1 to 10 is generated because *r* contains 10 seats. 
+```{r}
+r <- runif(10); order(r)
+```
+The command '%*%' is used to multiply two conform matrices with each other. In our specific case, we have two vectors and the command will then return the inner product.  
+*PS*: the actual command given was a simple %, but that threw an error (so I tried to fix it by using a similar command, although I don't know if what I changed it to corresponds to the inital upset).
+```{r}
+100 %*% 3
+```
+The command shown below renders a new matrix containing all information of the samples of which the value in the column 'Weight' is equal to 16 while the value in the column 'SP' is equal to PMG. Since names of variables are casesensitive, it is important to write '**W**eight' instead of '**w**eight'. Additionally, two &'s means that only the first element of each vector (Weight and SP) is evaluated, while we probably want to compare the entire vectors elementwise. Therefore, the code is adapted so that only one & remains.
+```{r}
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
+```
+#### 3. Calculate the mode for the weight of the mice in wild.metadata.txt
+Since the mode corresponds to the value that occurs most often, we can calculate the mode using the command 'summary' (as done before). However, now that we don't want summary to simply calculate the maximum weight that occurs, we first need to change the weight (now numeric) to a factor.
+```{r}
+metadata$Weight<- factor(metadata$Weight)
+summWeight <- summary(metadata)
+```
+The most recurring weight, together with the amount of occurence, is equal to `r 
+summWeight[1,8]` times.
+
+#### 4. Using R commands, write the table to a new text file, but exclude the Ear and Repro columns
+```{r, echo=TRUE, eval=FALSE}
+newMetadata <- metadata[,-7]
+newMetadata <- newMetadata[,-8]
+newcolnames <- "Group"
+newcolnames[2:7] <- colnames(newMetadata)
+
+   write.table(newMetadata, file = "new.metadata.txt", sep = "\t", append = FALSE, quote = FALSE, col.names = newcolnames, row.names = TRUE)
+
+  write.matrix(newMetadata, file = "newnew.metadata.txt", sep = " ", blocksize)
+
+
+```
