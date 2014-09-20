@@ -23,30 +23,38 @@ NamesOfColumns <- colnames(metadata)
 
 The amount of samples described in the *wild.metadata.txt* is equal to `r AmountOfSamples`. There are `r AmountOfColumns` columns present in this table, and their names are the following: `r NamesOfColumns`.
 
-*The R-code chunk used to answer the question regarding **heavy mice** is given below.* To calculate the amount of heavy mice (and not of simply all heavier samples, since some mice are sampled multiple times), we first need to calculate the mean weight for each mouse. The first two *for-loops* combined with the *if-loop* generate a new vector containing the mean weight of each separate mouse (having the same eartag). The last *if-loop* is inserted so that no 'zero' is added to this vector for eartags that do not occur in the data (e.g. number 6). Afterwards, it is easy to calculate the total amount of heavy mice.
+*The R-code chunk used to answer the question regarding **heavy mice** is given below.* To calculate the amount of heavy mice (and not of simply all heavier samples, since some mice are sampled multiple times), we first need to calculate the mean weight for each mouse. The first two *for-loops* combined with the *if-loop* generate a new vector containing the mean weight of each separate mouse (having the same eartag). The last *if-loop* is inserted so that no 'zero' is added to this vector for eartags that do not occur in the data (e.g. number 6). Afterwards, it is easy to calculate the total amount of heavy mice. To be able to answer one of the following questions (where we have to sort the data based on the weight of each mouse), I added a line of code to create a matrix that both contains the mean weight *and* all the other information.
 ```{r}
 maxET <- max(metadata[,"ET"])
 MeanWeightPerMouse <- 0
 l <- 0
+metadataMeanWeightPerMouse <- metadata
 # Go through all eartags.
 for (j in 1:maxET) {
   TempWeightPerMouse <- 0
+  TempDataPerMouse <- matrix(ncol=AmountOfColumns)
   k <- 0
-  # For each eartag, go through all rows and look for recurring eartags. If there are multiple, save all separate weights into TWPM (the weight is also saved if an eartag only occurs once).
+  # For each eartag, go through all rows and look for recurring eartags. If there are multiple, save all separate weights into TWPM (the weight is also saved if an eartag only occurs once). The general data of each eartag is saved into TDPM.
   for (i in 1:AmountOfSamples) {
     if (metadata[i, "ET"]==j){
       k <- k + 1
       TempWeightPerMouse[k] <- metadata[i, "Weight"]
+      TempDataPerMouse <- metadata[i,]
     }
   }
   # For each eartag, see if it is present in the list (k will be larger than 0) and take the mean of all weights of this mouse.
   if (k > 0){
     l <- l + 1
     TempMean <- mean(TempWeightPerMouse)
+    metadataMeanWeightPerMouse[l,] <- TempDataPerMouse
   }
-  # For each eartag, add the previously calculated mean to a new vector: MWPM.
+  # For each eartag, add the previously calculated mean to a new vector: MWPM, and to a new matrix: metadataMWPM. 
   MeanWeightPerMouse[l] <- TempMean
+  metadataMeanWeightPerMouse[l,"Weight"] <- TempMean
 }
+
+#The matrix metadataMWPM now contains a lot of extra rows (this matrix started out as metadata and only the first rows are now replaced), which need to be removed. This can easily be done using the length of vector MWPM. 
+metadataMeanWeightPerMouse <- metadataMeanWeightPerMouse[1:length(MeanWeightPerMouse),]
 
 #Finally, the amount of mice with a weight higher than 15 is calculated, by simple counting.
 counter <- 0
@@ -85,7 +93,7 @@ The amount of *female PL mice* present in metadata is equal to `r AmountOfFemale
 
 *The R-code chunk used to **alphabetize the data by eartag number** is shown below.*
 ```{r}
-metadataAlphaET <- matrix(nrow = )
+metadataAlphaET <- metadata
 k <- 0
 # Go through all eartag-values, starting at the lowest value of 1.
 for (j in 1:maxET) {
@@ -99,6 +107,27 @@ for (j in 1:maxET) {
 }
 # Show the top 5 rows of the new matrix metadataAlphaET.
 head(metadataAplhaET)
+```
+
+*The R-code chunk used to **sorten the data by the weight of each animal** is shown below.* It is now necessary to not only have the mean weight of each animal, but also the corresponding data. The previous code is adapted and a new vector is created, metadataMWPM, which contains both the mean weight of each animal *and* all the extra data. It is now rather easy to sort the data by weight using the same code of the previous exercise.
+```{r}
+metadataSortWeight <- metadata
+k <- 0
+maxWeight <- max(metadataMeanWeightPerMouse[,"Weight"])
+# Go through all eartag-values, starting at the lowest value of 1.
+for (j in 1:maxWeight) {
+  # For each eartag, go through all rows and look for samples with the same eartag. Each time a sample is found that has this specific eartag, the corresponding row in metadata is added to a new matrix called 'metadataAlphaET'. The weight, however, also contains decimals and now it is no longer sufficient to go over all integers between 1 and the maximal mean weight. Since it is impossible to go over decimals in a *for-loop*, I've added a vector 's' that is able to do this which is then called upon in the *for-loop*.
+  s <- seq(1, length(MeanWeightPerMouse), by = 0.5) 
+  for (i in s) {
+    if (metadataMeanWeightPerMouse[i, "Weight"] == j) {
+      k <- k + 1
+      metadataSortWeight[k,] <- metadataMeanWeightPerMouse[i,]
+    }
+  }
+}
+# Remove the extra rows + show the top 5 rows of the new matrix metadataSortWeight.
+metadataSortWeight <- metadataSortWeight[1:length(MeanWeightPerMouse),]
+head(metadataSortWeight)
 ```
 
 
