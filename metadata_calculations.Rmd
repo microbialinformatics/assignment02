@@ -177,14 +177,15 @@ summWeight[1,8]` times.
 
 #### 4. Using R commands, write the table to a new text file, but exclude the Ear and Repro columns
 ```{r, echo=TRUE, eval=FALSE}
-newMetadata <- metadata[,-7]
-newMetadata <- newMetadata[,-8]
+#Deleting the two columns (Ear and Repro)
+shortMetadata <- metadata[,-7]
+shortMetadata <- shortMetadata[,-8]
+#Adding the row names as a column, so that we can give them a heading (which will be "Group")
+newMetadata<-cbind(rownames(metadata), shortMetadata)
+#Adding "Group" as a column name
 newcolnames <- "Group"
-newcolnames[2:7] <- colnames(newMetadata)
-
-   write.table(newMetadata, file = "new.metadata.txt", sep = "\t", append = FALSE, quote = FALSE, col.names = newcolnames, row.names = TRUE)
-
-  write.matrix(newMetadata, file = "newnew.metadata.txt", sep = " ", blocksize)
-
+newcolnames[2:8] <- colnames(shortMetadata)
+#The actual writing command
+  write.table(newMetadata, file = "new.metadata.txt", append = FALSE, quote = FALSE, sep = "\t",  col.names = newcolnames, row.names = FALSE)
 
 ```
