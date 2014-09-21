@@ -1,0 +1,198 @@
+---
+title: "Assignment_2_Iris"
+author: "Iris"
+date: "September 19, 2014"
+output: html_document
+---
+
+```{r}
+metadata <- read.table(file="wild.metadata.txt", header=T)
+rownames(metadata) <- metadata$Group
+metadata <- metadata[,-1]
+```
+
+Question 1
+
+Part 1) How many samples were described in wild.metadata.txt?
+
+There is one sample per row, so if I find the number of rows in the table, I know 
+the number of samples. Here I am considering different samples from the same mouse
+to be separate.
+```{r, eval=TRUE}
+num_rows <- nrow(metadata)
+num_rows
+```
+
+There are `r nrow(metadata)` samples in this table.
+
+Part 2) How many columns are in the table? What are their names?
+
+```{r, eval=TRUE}
+num_col <- ncol(metadata)
+num_col
+#names of the columns
+colnames(metadata)
+```
+
+The number of columns is `r ncol(metadata)` and the column names are 
+`r colnames(metadata)`
+
+Part 3) How many mice weighed 15 or more grams?
+
+I can find this by deleting replicate entries in the table, then subsetting the table
+by weights to only include the mice that weigh more than 15 g.
+
+```{r, eval=TRUE}
+# I remove duplicates based on the their ear tag number
+mouse.unique.mat <- metadata[!duplicated(metadata["ET"]),]
+# then remove all mice with weights less than 15 g
+weightGreater15 <- mouse.unique.mat[mouse.unique.mat["Weight"]>15,]
+# then count the remaining rows
+nrow(mouse.unique.mat)
+```
+
+There are `r nrow(mouse.unique.mat)` mice with at least one recorded weight greater than 15 g.
+
+Part 4) What is the median weight for the mice sampled?
+
+```{r, eval=TRUE}
+median.weight <- median(metadata[,8])
+```
+
+The median weight is `r median.weight`. Note - I first tried this with the command 
+median(metadata["Weight"]), which returned an error message, indicating that the input file
+subset by column name is not a numeric object. When extracted the weight values using the 
+column number, R recognized them as a vector.
+
+Part 5) How many PMG mice were there?
+
+```{r, eval=TRUE}
+# first find the mouse records that have species "PMG" and subset the matrix
+mouse.PMG <- metadata[metadata["SP"]=="PMG",]
+
+# then remove duplicates
+
+PMG.unique.mat <- mouse.PMG[!duplicated(mouse.PMG["ET"]),]
+```
+
+There are `r nrow(mouse.PMG)` separate records of PMG mice, and `r nrow(PMG.unique.mat)` unique
+PMG mice.
+
+Part 6) How many female PL mice were there?
+
+```{r, eval=TRUE}
+# first I find the number of "PL" mice
+mouse.PL <- metadata[metadata["SP"]=="PL",]
+
+# then I find the number of those that are female
+
+mouse.fem.PL <- mouse.PL[mouse.PL["Sex"]=="F",]
+
+# remove duplicates
+
+mouse.fem.PL.unique <- mouse.fem.PL[!duplicated(mouse.fem.PL["ET"]),]
+```
+
+There are `r nrow(mouse.fem.PL)` separate records of female PL mice, and 
+`r nrow(mouse.fem.PL.unique)` individual female PL mice.
+
+Part 7) Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+
+```{r, eval=TRUE}
+sorted <- metadata[order(metadata["ET"]),]
+```
+
+The first 5 rows of `metadata` sorted on ear tag number are: 
+
+```{r, eval=TRUE, echo=FALSE}
+sorted[1:5,]
+```
+
+Part 8) Sort the table by the weight of each animal
+
+```{r, eval=TRUE}
+weight <- metadata[order(metadata["Weight"]),]
+```
+
+The table sorted by weight is:
+
+```{r, eval=TRUE, echo=FALSE}
+weight
+```
+
+Part 9) The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+
+```{r, eval=TRUE}
+best.station <- sort(table(metadata["Station"]), decreasing=TRUE)[1]
+```
+
+The station where the most mice were sampled was `r names(best.station)`.
+
+Part 10) How many mice were captured there?
+
+```{r, eval=TRUE}
+N20mice <- metadata[metadata["Station"]=="N20",]
+
+N20.unique <- N20mice[!duplicated(N20mice["ET"]),]
+```
+
+There were `r nrow(N20mice)` captures of `r nrow(N20.unique)` unique individuals at 
+station `r names(best.station)`.
+
+
+Question 2
+
+This code gives us a sequence of numbers begining at 1 and going to 100, increasing by 3 at each step
+```{r, eval=TRUE}
+seq(1,100,3)
+```
+
+This code repeats the letters a and b ten times.
+```{r, eval=TRUE}
+rep(c("a","b"),10)
+```
+
+This code generates 10 numbers drawn from a uniform distribution between 0 and 1. For each element of the vector r, the "order" code gives that element's place in a ranked vector that places the elements of r in order from lowest to highest.
+
+```{r, eval=TRUE}
+r <- runif(10)
+rr <- order(r)
+```
+
+To get the final output vector `r r[rr]`, you subset the vector r by the vector rr, using the code
+
+```{r, echo=TRUE, eval=FALSE}
+r[rr]
+```
+
+As far as I can tell, the % sign is not an operator on its own in R. The %% is the modulus operator, which gives the remainder when the first number is divided by the second.
+
+```{r, eval=TRUE, echo=TRUE}
+100 %% 3
+```
+
+This operator subsets the table metadata such that it only shows the individuals that are both of the species PMG and weigh 16 g. For this case, the && operator returns an error, while the & operator returns the (presumable) table of interest.
+
+```{r, eval=TRUE, echo=TRUE}
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
+```
+
+Question 3.  Calculate the mode for the weight of the mice in `wild.metadata.txt`
+
+```{r, eval=TRUE, echo=TRUE}
+mode.weight <- sort(table(metadata["Weight"]), decreasing=TRUE)[1]
+```
+
+The mode weight is `r names(mode.weight)` g.
+
+4.  Using R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
+
+```{r, eval=FALSE}
+metadata <- metadata[,c(-7, -9)]
+write.table(metadata, file = "~/Desktop/metadata.txt")
+```
+
+
+
+
+
