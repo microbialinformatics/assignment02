@@ -1,15 +1,9 @@
 ---
-title: "Assignment 2"
-author: "Patrick D. Schloss"
-date: "September 15, 2014"
-output:
-  html_document:
-    keep_md: yes
+title: "Assignment_2_Iris"
+author: "Iris"
+date: "September 19, 2014"
+output: html_document
 ---
-
-Complete the exercises listed below and submit as a pull request to the [Assignment 2 repository](http://www.github.com/microbialinformatics/assignment02).  Format this document approapriately using R markdown and knitr. I would like to see your code blocks and output in the final documents you submit. As much as possible, you should output your solutions by embedding the solution within the text [see this example](https://github.com/microbialinformatics/assignment02/blob/master/example.Rmd). For those cases where there are multiple outputs, make it clear in how you format the text and interweave the solution, what the solution is.
-
-Your pull request needs to include your *.Rmd and *.md files. Do not alter the `.gitignore` file. You may work with a partner, but you must submit your own assignment and give credit to anyone that worked with you on the assignment.
 
 ```{r}
 metadata <- read.table(file="wild.metadata.txt", header=T)
@@ -17,10 +11,11 @@ rownames(metadata) <- metadata$Group
 metadata <- metadata[,-1]
 ```
 
-1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
+Question 1
 
-  * How many samples were described in the `wild.metadata.txt`?
-  There is one sample per row, so if I find the number of rows in the table, I know 
+Part 1) How many samples were described in wild.metadata.txt?
+
+There is one sample per row, so if I find the number of rows in the table, I know 
 the number of samples. Here I am considering different samples from the same mouse
 to be separate.
 ```{r, eval=TRUE}
@@ -30,37 +25,36 @@ num_rows
 
 There are `r nrow(metadata)` samples in this table.
 
-  * How many columns are in the table? What are their names?
-  
+Part 2) How many columns are in the table? What are their names?
+
 ```{r, eval=TRUE}
 num_col <- ncol(metadata)
 num_col
-#names of the columns
+## names of the columns
 colnames(metadata)
 ```
 
 The number of columns is `r ncol(metadata)` and the column names are 
 `r colnames(metadata)`
 
-  * How many mice weighed 15 or more grams?
-  
-  I can find this by deleting replicate entries in the table, then subsetting the table
+Part 3) How many mice weighed 15 or more grams?
+
+I can find this by deleting replicate entries in the table, then subsetting the table
 by weights to only include the mice that weigh more than 15 g.
 
 ```{r, eval=TRUE}
-# I remove duplicates based on the their ear tag number
 mouse.unique.mat <- metadata[!duplicated(metadata["ET"]),]
-# then remove all mice with weights less than 15 g
+## I remove duplicates based on the their ear tag number
 weightGreater15 <- mouse.unique.mat[mouse.unique.mat["Weight"]>15,]
-# then count the remaining rows
+## then remove all mice with weights less than 15 g
 nrow(mouse.unique.mat)
+## then count the remaining rows
 ```
 
 There are `r nrow(mouse.unique.mat)` mice with at least one recorded weight greater than 15 g.
 
-  * What is the median weight for the mice sampled?
-  
-  
+Part 4) What is the median weight for the mice sampled?
+
 ```{r, eval=TRUE}
 median.weight <- median(metadata[,8])
 ```
@@ -70,41 +64,35 @@ median(metadata["Weight"]), which returned an error message, indicating that the
 subset by column name is not a numeric object. When extracted the weight values using the 
 column number, R recognized them as a vector.
 
+Part 5) How many PMG mice were there?
 
-  * How many PMG mice were there?
-  
 ```{r, eval=TRUE}
-# first find the mouse records that have species "PMG" and subset the matrix
 mouse.PMG <- metadata[metadata["SP"]=="PMG",]
-
-# then remove duplicates
+## first find the mouse records that have species "PMG" and subset the matrix
 
 PMG.unique.mat <- mouse.PMG[!duplicated(mouse.PMG["ET"]),]
+## then remove duplicates
 ```
 
 There are `r nrow(mouse.PMG)` separate records of PMG mice, and `r nrow(PMG.unique.mat)` unique
 PMG mice.
 
-  * How many female PL mice were there?
-  
+Part 6) How many female PL mice were there?
+
 ```{r, eval=TRUE}
-# first I find the number of "PL" mice
 mouse.PL <- metadata[metadata["SP"]=="PL",]
-
-# then I find the number of those that are female
-
+## first I find the number of "PL" mice
 mouse.fem.PL <- mouse.PL[mouse.PL["Sex"]=="F",]
-
-# remove duplicates
-
+## then I find the number of those that are female
 mouse.fem.PL.unique <- mouse.fem.PL[!duplicated(mouse.fem.PL["ET"]),]
+## remove duplicates
 ```
 
 There are `r nrow(mouse.fem.PL)` separate records of female PL mice, and 
 `r nrow(mouse.fem.PL.unique)` individual female PL mice.
 
-  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
-  
+Part 7) Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+
 ```{r, eval=TRUE}
 sorted <- metadata[order(metadata["ET"]),]
 ```
@@ -115,8 +103,8 @@ The first 5 rows of `metadata` sorted on ear tag number are:
 sorted[1:5,]
 ```
 
-  * Sort the table by the weight of each animal
-  
+Part 8) Sort the table by the weight of each animal
+
 ```{r, eval=TRUE}
 weight <- metadata[order(metadata["Weight"]),]
 ```
@@ -127,15 +115,15 @@ The table sorted by weight is:
 weight
 ```
 
-  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
-  
+Part 9) The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+
 ```{r, eval=TRUE}
 best.station <- sort(table(metadata["Station"]), decreasing=TRUE)[1]
 ```
 
 The station where the most mice were sampled was `r names(best.station)`.
 
-  * How many mice were captured there?
+Part 10) How many mice were captured there?
 
 ```{r, eval=TRUE}
 N20mice <- metadata[metadata["Station"]=="N20",]
@@ -147,31 +135,29 @@ There were `r nrow(N20mice)` captures of `r nrow(N20.unique)` unique individuals
 station `r names(best.station)`.
 
 
-2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
+Question 2
 
-```
+This code gives us a sequence of numbers begining at 1 and going to 100, increasing by 3 at each step
+```{r, eval=TRUE}
 seq(1,100,3)
 ```
-This code gives us a sequence of numbers begining at 1 and going to 100, increasing by 3 at each step
 
-```
+This code repeats the letters a and b ten times.
+```{r, eval=TRUE}
 rep(c("a","b"),10)
 ```
-This code repeats the letters a and b ten times.
 
-```
-r <- runif(10); order(r)
-```
 This code generates 10 numbers drawn from a uniform distribution between 0 and 1. For each element of the vector r, the "order" code gives that element's place in a ranked vector that places the elements of r in order from lowest to highest.
+
+```{r, eval=TRUE}
+r <- runif(10)
+rr <- order(r)
+```
 
 To get the final output vector `r r[rr]`, you subset the vector r by the vector rr, using the code
 
 ```{r, echo=TRUE, eval=FALSE}
 r[rr]
-```
-
-```
-100 % 3
 ```
 
 As far as I can tell, the % sign is not an operator on its own in R. The %% is the modulus operator, which gives the remainder when the first number is divided by the second.
@@ -180,17 +166,13 @@ As far as I can tell, the % sign is not an operator on its own in R. The %% is t
 100 %% 3
 ```
 
-
-
-```
-metadata[metadata$weight==16 && metadata$SP=="PMG",]
-```
-
 This operator subsets the table metadata such that it only shows the individuals that are both of the species PMG and weigh 16 g. For this case, the && operator returns an error, while the & operator returns the (presumable) table of interest.
 
+```{r, eval=TRUE, echo=TRUE}
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
+```
 
-
-3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
+Question 3.  Calculate the mode for the weight of the mice in `wild.metadata.txt`
 
 ```{r, eval=TRUE, echo=TRUE}
 mode.weight <- sort(table(metadata["Weight"]), decreasing=TRUE)[1]
@@ -198,12 +180,14 @@ mode.weight <- sort(table(metadata["Weight"]), decreasing=TRUE)[1]
 
 The mode weight is `r names(mode.weight)` g.
 
-
-4.	Using R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
+4.  Using R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
 ```{r, eval=FALSE}
 metadata <- metadata[,c(-7, -9)]
 write.table(metadata, file = "~/Desktop/metadata.txt")
 ```
+
+
+
 
 
