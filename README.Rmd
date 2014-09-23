@@ -96,24 +96,31 @@ max_name <- names(sortedcounts[1])
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
+
+Vector with every third number from 1 to 100 
 ```
 seq(1,100,3)
+
 ```
 
+Vector with repeating letters a and b 10 times, alternating.
 ```
 rep(c("a","b"),10)
 ```
 
+r is a vector of 10 numbers from 0 to 1 following a uniform distribution. order(r) will sort the numbers and print the index values of the sorted numbers.
 ```
 r <- runif(10); order(r)
 ```
 
+A single % sign can't be used for mathematical operations in R. Possibly you meant to use %% which is the modulus operator. 100 %% 3 will output the remainder of 3 into 100, which is 1.
 ```
-100 % 3
+100 %% 3
 ```
 
+This statement will print a parsed data frame 'metadata' to include only observations in which the weight is exactly 16 and the SP is PMG. There is a typo - weight should be capitalized. Also, the && boolean operator is meant for vectors and will not evaluate this data frame correctly. Use a single &.
 ```
-metadata[metadata$weight==16 && metadata$SP=="PMG",]
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 ```
 
 
