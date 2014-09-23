@@ -199,5 +199,11 @@ mode.weight <- sort(table(metadata["Weight"]), decreasing=TRUE)[1]
 The mode weight is `r names(mode.weight)` g.
 
 
-4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
+4.	Using R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
+
+```{r, eval=FALSE}
+metadata <- metadata[,c(-7, -9)]
+write.table(metadata, file = "~/Desktop/metadata.txt")
+```
+
 
