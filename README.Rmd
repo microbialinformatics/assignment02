@@ -20,6 +20,12 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
+```{r}
+n.samples <- nrow(metadata[,])
+```
+# Does this count include headers?
+  There were `r n.samples` samples described in the `wild.metadata.txt`.
+  
   * How many columns are in the table? What are their names?
   * How many mice weighed 15 or more grams?
   * What is the median weight for the mice sampled?
@@ -29,7 +35,6 @@ metadata <- metadata[,-1]
   * Sort the table by the weight of each animal
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
   * How many mice were captured there?
-
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
