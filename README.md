@@ -20,26 +20,102 @@ metadata <- metadata[,-1]
 
 ```r
 nsamples <- nrow(metadata)
-nsamples
 ```
 
-```
-## [1] 111
-```
-
-There are 111 samples in the `wild.metadata.txt` file.
+**Answer:** There are 111 samples in the `wild.metadata.txt` file.
   
   
   * How many columns are in the table? What are their names?
-  * How many mice weighed 15 or more grams?
-  * What is the median weight for the mice sampled?
-  * How many PMG mice were there?
-  * How many female PL mice were there?
-  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
-  * Sort the table by the weight of each animal
-  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
-  * How many mice were captured there?
 
+
+```r
+nvariables <- ncol(metadata) #get number of columns
+colnames <- colnames(metadata) #get column names
+```
+
+**Answer:** There are 9 columns in the file and their names are Date, ET, Station, SP, Sex, Age, Repro, Weight, Ear.
+  
+  * How many mice weighed 15 or more grams?
+
+```r
+big_samples <- subset(metadata, Weight>=15) #parse data frame to include only heavy samples
+big_nsamples <- nrow(big_samples) #count number of samples over 15
+big_samples$ET <- factor(big_samples$ET) #make ET a factor 
+big_mice <- length(unique(big_samples$ET)) #count the number of unique mice over 15 grams
+```
+
+**Answer:** There are 31 unique mice over 77 samples that weight 15 or more grams.
+  
+  * What is the median weight for the mice sampled?
+
+```r
+median_weight <- median(metadata$Weight)
+```
+
+**Answer:** The median weight of all samples is 16.
+  
+  * How many PMG mice were there?
+
+```r
+PMG_mice <- subset(metadata, metadata$SP=='PMG') #parse data frame to include only PMG mice
+PMG_num <- length(unique(PMG_mice$ET))
+```
+
+**Answer:** There are 23 PMG mice.
+  
+  * How many female PL mice were there?
+
+```r
+female_PL <- subset(metadata, metadata$Sex=='F' & metadata$SP=='PL')  #parse data table to be only female PL mice
+femalePL_unique <- length(unique(female_PL$ET)) #have to do this to avoid repeat samples from same mouse
+```
+
+**Answer:** The number of female PL mice in the dataset is 9.
+
+  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+  
+
+```r
+sortedET <- metadata[order(metadata$ET),] #sort and save dataframe to new varible
+sortedET[1:5,]
+```
+
+```
+##        Date ET Station SP Sex Age Repro Weight Ear
+## 5_26m1 5_26  1     A12 PL   F   A    NE   19.5  14
+## 6_14m1 6_14  1    AA13 PL   F   A    NE   22.0  14
+## 7_13m1 7_13  1    AA13 PL   F   A    NE   23.5  14
+## 7_14m1 7_14  1    CC13 PL   F   A    NE   21.0  15
+## 5_31m2 5_31  2     CC4 PL   M  SA   ABD   15.0  14
+```
+  
+  
+  * Sort the table by the weight of each animal
+
+```r
+sorted_weight <- metadata[order(metadata$ET, metadata$Weight),] #the animals are sorted and each animal is sorted by weight
+sorted_weight[1:5,]
+```
+
+```
+##        Date ET Station SP Sex Age Repro Weight Ear
+## 5_26m1 5_26  1     A12 PL   F   A    NE   19.5  14
+## 7_14m1 7_14  1    CC13 PL   F   A    NE   21.0  15
+## 6_14m1 6_14  1    AA13 PL   F   A    NE   22.0  14
+## 7_13m1 7_13  1    AA13 PL   F   A    NE   23.5  14
+## 5_31m2 5_31  2     CC4 PL   M  SA   ABD   15.0  14
+```
+
+  * The `Station` column indicates where the mice were sampled. Where were the most mice captured? How many mice were captured there?
+
+```r
+counts <- summary(metadata$Station)
+sortedcounts<- sort(counts, decreasing=T)
+max_number <- sortedcounts[1]
+max_name <- names(sortedcounts[1])
+```
+  
+**Answer:** The most mice were captured at N20 Station and there were 4 mice captured there.
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
