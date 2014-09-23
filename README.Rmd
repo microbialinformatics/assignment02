@@ -23,10 +23,19 @@ metadata <- metadata[,-1]
 ```{r}
 n.samples <- nrow(metadata[,])
 ```
-# Does this count include headers?
-  There were `r n.samples` samples described in the `wild.metadata.txt`.
+<!---
+Does this count include headers?
+-->
+There were `r n.samples` samples described in the `wild.metadata.txt`.
   
-  * How many columns are in the table? What are their names?
+  * How many columns are in the table? What are their names? 
+```{r}
+n.columns <- ncol(metadata[,])
+names <- colnames(metadata)
+```
+There are `r n.columns` columns in the table.
+Their names are `r names`.
+
   * How many mice weighed 15 or more grams?
   * What is the median weight for the mice sampled?
   * How many PMG mice were there?
