@@ -32,7 +32,7 @@ There are `r nrow(metadata)` samples in this table.
 
   * How many columns are in the table? What are their names?
   
-  ```{r, eval=TRUE}
+```{r, eval=TRUE}
 num_col <- ncol(metadata)
 num_col
 #names of the columns
@@ -191,6 +191,12 @@ This operator subsets the table metadata such that it only shows the individuals
 
 
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
+
+```{r, eval=TRUE, echo=TRUE}
+mode.weight <- sort(table(metadata["Weight"]), decreasing=TRUE)[1]
+```
+
+The mode weight is `r names(mode.weight)` g.
 
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
