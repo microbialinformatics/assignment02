@@ -50,6 +50,12 @@ med <- median(metadata$Weight, na.rm = FALSE)
 The median weight for the mice sampled was `r med`.
 
   * How many PMG mice were there?
+```{r}
+PMG <- metadata$SP == "PMG"
+n.PMG <- nrow(metadata[PMG,])
+```
+There were `r n.PMG` PMG mice.
+
   * How many female PL mice were there?
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
   * Sort the table by the weight of each animal
