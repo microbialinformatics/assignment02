@@ -37,6 +37,12 @@ There are `r n.columns` columns in the table.
 Their names are `r names`.
 
   * How many mice weighed 15 or more grams?
+```{r}
+more.weight <- metadata$Weight >= 15
+n.more.weight <- nrow(metadata[more.weight,])
+```
+There were `r n.more.weight` mice that weighed 15 or more grams.
+
   * What is the median weight for the mice sampled?
   * How many PMG mice were there?
   * How many female PL mice were there?
