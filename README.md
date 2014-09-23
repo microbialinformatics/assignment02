@@ -15,43 +15,292 @@ metadata <- metadata[,-1]
 
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
-  * How many samples were described in the `wild.metadata.txt`?
-  * How many columns are in the table? What are their names?
-  * How many mice weighed 15 or more grams?
-  * What is the median weight for the mice sampled?
-  * How many PMG mice were there?
-  * How many female PL mice were there?
-  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
-  * Sort the table by the weight of each animal
-  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
-  * How many mice were captured there?
+  * How many samples were described in the `wild.metadata.txt`? How many columns are in the table? What are their names?  
+*The R-code chunk used to answer the **first three questions** :*
+
+```r
+AmountOfSamples <- nrow(metadata)
+AmountOfColumns <- ncol(metadata)
+NamesOfColumns <- colnames(metadata)
+```
+
+The amount of samples described in the *wild.metadata.txt* is equal to 111. There are 9 columns present in this table, and their names are the following: Date, ET, Station, SP, Sex, Age, Repro, Weight, Ear.
 
 
-2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
+  * How many mice weighed 15 or more grams?  
+*The R-code chunk used to answer the question regarding **heavy mice** is given below. I started by writing my own code (OLD), after which I found out that the command 'aggregate' could be used as well (NEW). Both codes are shown.*  
+**OLD** To calculate the amount of heavy mice (and not of simply all heavier samples, since some mice are sampled multiple times), we first need to calculate the mean weight for each mouse. The first two *for-loops* combined with the *if-loop* generate a new vector containing the mean weight of each separate mouse (having the same eartag). The last *if-loop* is inserted so that no 'zero' is added to this vector for eartags that do not occur in the data (e.g. number 6). Afterwards, it is easy to calculate the total amount of heavy mice. To be able to answer one of the following questions (where we have to sort the data based on the weight of each mouse), I added a line of code to create a matrix that both contains the mean weight *and* all the other information.  
+**NEW** I can simply use lists so solve this question in one line. The command aggregate, however, does not give a matrix with all other information (which will be necessary later on) so at least my code does that additionally. It is important to note, however, that most columns have now lost their meaning since they differ over different samples for the same mice (i.e.: group, date, station, age, repro, and ear).
+
+```r
+#OLD
+maxET <- max(metadata[,"ET"])
+MeanWeightPerMouse <- 0
+l <- 0
+metadataMeanWeightPerMouse <- metadata
+# Go through all eartags.
+for (j in 1:maxET) {
+  TempWeightPerMouse <- 0
+  TempDataPerMouse <- matrix(ncol=AmountOfColumns)
+  k <- 0
+  # For each eartag, go through all rows and look for recurring eartags. If there are multiple, save all separate weights into TWPM (the weight is also saved if an eartag only occurs once). The general data of each eartag is saved into TDPM.
+  for (i in 1:AmountOfSamples) {
+    if (metadata[i, "ET"]==j){
+      k <- k + 1
+      TempWeightPerMouse[k] <- metadata[i, "Weight"]
+      TempDataPerMouse <- metadata[i,]
+    }
+  }
+  # For each eartag, see if it is present in the list (k will be larger than 0) and take the mean of all weights of this mouse.
+  if (k > 0){
+    l <- l + 1
+    TempMean <- mean(TempWeightPerMouse)
+    metadataMeanWeightPerMouse[l,] <- TempDataPerMouse
+  }
+  # For each eartag, add the previously calculated mean to a new vector: MWPM, and to a new matrix: metadataMWPM.
+  MeanWeightPerMouse[l] <- TempMean
+  metadataMeanWeightPerMouse[l,"Weight"] <- TempMean
+}
+
+#The matrix metadataMWPM now contains a lot of extra rows (this matrix started out as metadata and only the first rows are now replaced), which need to be removed. This can easily be done using the length of vector MWPM. 
+metadataMeanWeightPerMouse <- metadataMeanWeightPerMouse[1:length(MeanWeightPerMouse),]
+
+#Finally, the amount of mice with a weight higher than 15 is calculated, by simple counting.
+counterOLD <- 0
+for(i in 1:length(MeanWeightPerMouse)){
+  if(MeanWeightPerMouse[i]>15) { 
+    counterOLD <- counterOLD + 1
+  } 
+}
+AmountOfHeavyMiceOLD <- counterOLD
+
+#NEW: Try-out of 'lists'
+ListMWPM <- aggregate(metadata$Weight, by=list(metadata$ET), mean)
+#Repetition of simple counting.
+counterNEW <- 0
+for(i in 1:nrow(ListMWPM)){
+  if(ListMWPM[i,2]>15) { 
+    counterNEW <- counterNEW + 1
+  } 
+}
+AmountOfHeavyMiceNEW <- counterNEW
+```
+The old code says that there are 28 mice that weigh more than 15 grams, while the new code (note the huge difference in lines required) ends up with the same result: 28 mice.
+
+  * What is the median weight for the mice sampled?  
+*The R-code chunk used to answer the question regarding **median weight** is shown below.* To calculate the median weight of all *mice* (and not *samples*), we use the previously generated vector 'MeanWeightPerMouse' which contains the mean weight for each mouse (note that we could also use the second column of 'ListMWPM').
+
+```r
+MedianWeightofMice <-median(MeanWeightPerMouse)
+```
+The median weight of all sampled mice is now equal to 16. If we simply wanted to calculate the median weight of all samples, the following command would have sufficed:
+
+```r
+MedianWeightofAllSamples <- median(metadata$Weight)
+```
+(Which results -coincidentally- in the same value: 16.)
+
+  * How many PMG mice were there?  
+*The R-code chunk used to answer the question regarding **PMG mice** is shown below.* We now start out with the previously created matrix, metadataMeanWeightPerMouse (in order to not double count the mice sampled multiple times).
+
+```r
+metadataPMG<-metadataMeanWeightPerMouse[metadataMeanWeightPerMouse$SP=="PMG",]
+AmountOfPMG <- nrow(metadataPMG)
+```
+There are 23 PMG mice present in the samples.
+
+  * How many female PL mice were there?  
+*The R-code chunk used to answer the question regarding **female PL mice** is shown below.* We again start out with the previously created matrix, metadataMeanWeightPerMouse (in order to not double count the mice sampled multiple times).
+
+```r
+metadataFPL<-metadataMeanWeightPerMouse[metadataMeanWeightPerMouse$SP=="PL" & metadataMeanWeightPerMouse$Sex=="F",]
+AmountOfFemalePL <- nrow(metadataFPL)
+```
+The amount of female PL mice present in metadata is equal to 9.
+
+  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)  
+*The R-code chunk used to **alphabetize the data by eartag number** is shown below.* The five top rows of the alphabetized table are shown in the white frame.
+
+```r
+minET <- min(metadata[,"ET"])
+metadataAlphaET <- metadata
+k <- 0
+# Go through all eartag-values, starting at the lowest value of 1.
+for (j in minET:maxET) {
+  # For each eartag, go through all rows and look for samples with the same eartag. Each time a sample is found that has this specific eartag, the corresponding row in metadata is added to a new matrix called 'metadataAlphaET'. 
+  for (i in 1:AmountOfSamples) {
+    if (metadata[i, "ET"] == j) {
+      k <- k + 1
+      metadataAlphaET[k,] <- metadata[i,]
+    }
+  }
+}
+# Show the top 5 rows of the new matrix metadataAlphaET.
+metadataAlphaET[1:5,]
+```
 
 ```
+##         Date ET Station SP Sex Age Repro Weight Ear
+## 5_25m3  5_26  1     A12 PL   F   A    NE   19.5  14
+## 5_25m4  6_14  1    AA13 PL   F   A    NE   22.0  14
+## 5_26m1  7_13  1    AA13 PL   F   A    NE   23.5  14
+## 5_26m9  7_14  1    CC13 PL   F   A    NE   21.0  15
+## 5_31m11 5_31  2     CC4 PL   M  SA   ABD   15.0  14
+```
+
+  * Sort the table by the weight of each animal  
+*The R-code chunk used to **sort the data by the weight of each animal** is shown below.* It is now necessary to not only have the mean weight of each animal, but also the corresponding data. This, however, makes no sense for the data of columns group, date, station, age, repro, and ear since these differ between samples for the same mice. I therefore made two new tables: (1) the data is sorted by the weight of *each animal* while the additional columns that no longer make sense are removed (=metadataSortAnimal), and (2) the data is sorted by the weight of *each sample* while all columns are retained (=metadataSortSample).
+The sorting is done using the same code of the previous exercise (for both tables).  
+**Remark**: As you can read when going through the code, R is doing something very weird. I am therefore printing some values to illustrate where R is going wrong. To not overload the html page with a big vector of numbers, I have hidden the output of the commands in this code chunk. This, however, also means that the requested top 5 rows of both tables are not shown currently.
+
+```r
+#Creating of first table: 
+metadataSortAnimal <- metadata
+k <- 0
+#For computing purposes, the mean values are all rounded to one digit after the comma.
+metadataMeanWeightPerMouse[,"Weight"] <- round(MeanWeightPerMouse, digits = 1)
+minWeight <- min(metadataMeanWeightPerMouse[,"Weight"])
+maxWeight <- max(metadataMeanWeightPerMouse[,"Weight"])
+# Go through all mean-weight-values, starting at the lowest value of 1. Since it is impossible to go over decimals in a *for-loop*, I've added a vector 's' that is able to do this which is then called upon in the *for-loop*.
+s <- seq(minWeight, maxWeight, by = 0.1) 
+for (j in s) {  
+#PROBLEM IN R: this is very strange and enormously frustrating, but not all numbers within j are 'recognized' by R. I noticed that the mean weights of 11.7, 12.6, 14.2, and 18.9 are not included in the final metadataSortAnimal.I did some troubleshooting, and for some inconsistent reason in R the parameter j does go over all of these values, but the logical operator 'equal to' does simply not result in TRUE when it should be (i.e., when metadataMeanWeightPerMouse[i, "Weight"] == j, for instance in the case of row 44 and weight 14.2). As is shown by the following *if-loop*, R somehow does not recognize 14.2 as an element of j even though it most certainly is. (Code: print the number j whenever one of the following values is recognized and print the number j each time the loop goes => the numbers that are recognized should be displayed twice.)
+#PS: the subsequent piece of code has exactly the *same* coding, but instead of j 'jumping' over 0.1, it jumps over 0.5. This code runs perfectly.
+  if(j == 11.7 || j == 12.6 || j == 14.2 || j == 18.9 || j == 13.7 || j == 12.1 || j == 12.2 || j == 12.3 || j == 12.4 || j == 12.5 || j == 12.6 || j == 12.7 || j == 12.8 || j == 12.9 || j == 12){  
+  print(j)}
+  print(j)
+  
+# For each mean weight, go through all rows and store the increasing weights in a new matrix (metadataSortAnimal).
+  t <- seq(1, nrow(metadataMeanWeightPerMouse), by = 1)
+  for (i in t) {
+    if (metadataMeanWeightPerMouse[i, "Weight"] == j) {
+      k <- k + 1
+      metadataSortAnimal[k,] <- metadataMeanWeightPerMouse[i,]
+    }    
+  }
+}
+# Remove the extra rows and useless columns while renaming the remaining columns. The top 5 rows of the new matrix metadataSortAnimal are shown as a result.  
+#As explained previously, R does not find all mean weights and as such the final matrix needs to be shorter than the actual length of MeanWeightPerMouse (6 additional rows need to be deleted).
+metadataSortAnimal <- metadataSortAnimal[1:(length(MeanWeightPerMouse)-6),]
+metadataSortAnimal <- cbind(metadataSortAnimal$ET, metadataSortAnimal$SP, metadataSortAnimal$Sex, metadataSortAnimal$Weight)
+colnames(metadataSortAnimal) <- c("ET", "SP", "Sex", "Weight")
+metadataSortAnimal[1:5,]
+
+#Creating of second table:
+metadataSortSample <- metadata
+k <- 0
+minWeight <- min(metadata[,"Weight"])
+maxWeight <- max(metadata[,"Weight"])
+# Go through all weight-values, starting at the lowest value of 1.
+s <- seq(minWeight, maxWeight, by = 0.5) 
+for (j in s) {
+# For each mean weight, go through all rows and store the increasing weights in a new matrix (metadataSortSample).
+  for (i in 1:nrow(metadata)) {
+    if (metadata[i, "Weight"] == j) {
+      k <- k + 1
+      metadataSortSample[k,] <- metadata[i,]
+    }
+  }
+}
+#The top 5 rows of the new matrix metadataSortSample are shown as a result.
+metadataSortSample[1:5,]
+```
+  * The `Station` column indicates where the mice were sampled. Where were the most mice captured? How many mice were captured there?  
+*The R-code chunk used to answer the question regarding **most recurring station**:*
+
+```r
+summStation <- summary(metadata)
+```
+The most recurring station, together with the amount of occurence, is equal to N20    : 4   times.
+
+2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.  
+
+The command *seq()* is used to generate regular sequences. In this case, a sequence of integers (decimals are also possible, as shown in previous discussion) is generated that starts at the value 1, ends at the value 100, and 'jumps' with a value of 3. 
+
+```r
 seq(1,100,3)
 ```
 
 ```
+##  [1]   1   4   7  10  13  16  19  22  25  28  31  34  37  40  43  46  49
+## [18]  52  55  58  61  64  67  70  73  76  79  82  85  88  91  94  97 100
+```
+The command *rep()* is used to replicate a certain input (character, numberic,...) a specific amount of times (also input). The command *c()* is used to combine its arguments. This means that for this example, both the characters "a" and "b" are combined in one vector which is then repeated for 10 times, creating a new vector with 2 times 10 seats.
+
+```r
 rep(c("a","b"),10)
 ```
 
 ```
+##  [1] "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a"
+## [18] "b" "a" "b"
+```
+The command *runif* provides information about the uniform distribution on an interval from min to max (min = lower limit of the distribution, max = upper limit and both need to be finite). In this example, no min nor max is given and therefore the default minimum of 0 and maximum of 1 is selected. The value '10' in the example stands for the number of observations, and 'r' is used to save the corresponding uniform distribution. The command *order* returns a vector in which the argument is rearranged into ascending order (default). The vector actually contains the ordered seat-numbers of the argument, and not the real values. I.e., when the previously determined vector *r* is ordered, a vector containing 10 integers from 1 to 10 is generated because *r* contains 10 seats. 
+
+```r
 r <- runif(10); order(r)
 ```
 
 ```
-100 % 3
+##  [1]  8  9  3  5  2 10  6  7  4  1
+```
+The command '% * %' is used to multiply two conform matrices with each other. In our specific case, we have two vectors and the command will then return the inner product.  
+*PS*: the actual command given was a simple %, but that threw an error (so I tried to fix it by using a similar command, although I don't know if what I changed it to corresponds to the inital upset).
+
+```r
+100 %*% 3
 ```
 
 ```
-metadata[metadata$weight==16 && metadata$SP=="PMG",]
+##      [,1]
+## [1,]  300
+```
+The command shown below renders a new matrix containing all information of the samples of which the value in the column 'Weight' is equal to 16 while the value in the column 'SP' is equal to PMG. Since names of variables are casesensitive, it is important to write '**W**eight' instead of '**w**eight'. Additionally, two &'s means that only the first element of each vector (Weight and SP) is evaluated, while we probably want to compare the entire vectors elementwise. Therefore, the code is adapted so that only one & remains.
+
+```r
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 ```
 
+```
+##         Date ET Station  SP Sex Age Repro Weight Ear
+## 5_31m11 5_31 11      F2 PMG   F   J    NT     16  18
+## 6_15m16 6_15 16     L11 PMG   M   A   SCR     16  17
+## 6_1m12   6_1 12     H18 PMG   M   A   SCR     16  14
+## 6_30m43 6_30 43    CC13 PMG   F   J     N     16  15
+## 6_5m16   6_5 16     H20 PMG   M   A   SCR     16  16
+## 7_14m59 7_14 59     CC3 PMG   M  SA   SCR     16  17
+## 7_2m25   7_2 25     P17 PMG   F   A    NE     16  15
+## 7_3m43   7_3 43    CC13 PMG   F  SA    NT     16  16
+```
 
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
+Since the mode corresponds to the value that occurs most often, we can calculate the mode using the command 'summary' (as done before). However, now that we don't want summary to simply calculate the maximum weight that occurs, we first need to change the weight (now numeric) to a factor.
 
+```r
+metadata$Weight<- factor(metadata$Weight)
+summWeight <- summary(metadata)
+```
+The most recurring weight, together with the amount of occurence, is equal to 16     :12   times.
+
+**Remark**: I could do the exact same thing with respect to the *mean* weights of each mouse, as seen below.
+
+```r
+metadataMeanWeightPerMouse$Weight<- factor(metadataMeanWeightPerMouse$Weight)
+summMeanWeight <- summary(metadataMeanWeightPerMouse)
+```
+The most recurring mean weight, together with the amount of occurence, is equal to 17     : 5   times.
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
+```r
+#Deleting the two columns (Ear and Repro)
+shortMetadata <- metadata[,-7]
+shortMetadata <- shortMetadata[,-8]
+#Adding the row names as a column, so that we can give them a heading (which will be "Group")
+newMetadata<-cbind(rownames(metadata), shortMetadata)
+#Adding "Group" as a column name
+newcolnames <- "Group"
+newcolnames[2:8] <- colnames(shortMetadata)
+#The actual writing command
+  write.table(newMetadata, file = "new.metadata.txt", append = FALSE, quote = FALSE, sep = "\t",  col.names = newcolnames, row.names = FALSE)
+```
