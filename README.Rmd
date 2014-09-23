@@ -1,7 +1,7 @@
 ---
 title: "Assignment 2"
-author: "Patrick D. Schloss"
-date: "September 15, 2014"
+author: "Amanda Elmore"
+date: "September 23, 2014"
 output:
   html_document:
     keep_md: yes
@@ -20,6 +20,15 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
+  
+```{r}  
+nsamples <- nrow(metadata)
+nsamples
+```
+
+There are `r nsamples` samples in the `wild.metadata.txt` file.
+  
+  
   * How many columns are in the table? What are their names?
   * How many mice weighed 15 or more grams?
   * What is the median weight for the mice sampled?
