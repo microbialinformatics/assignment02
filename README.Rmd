@@ -73,6 +73,14 @@ sorted.metadata[1:5,]
 ```
 
   * Sort the table by the weight of each animal
+```{r}
+sortw.metadata <- metadata[order(metadata$Weight), ]
+```
+The first 5 rows of the sorted table are:
+```{r, echo=FALSE}
+sortw.metadata[1:5,]
+```
+
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
   * How many mice were captured there?
 
