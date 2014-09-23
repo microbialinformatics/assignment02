@@ -108,10 +108,11 @@ The amount of female PL mice present in metadata is equal to `r AmountOfFemalePL
 
 *The R-code chunk used to **alphabetize the data by eartag number** is shown below.* The five top rows of the alphabetized table are shown in the white frame.
 ```{r}
+minET <- min(metadata[,"ET"])
 metadataAlphaET <- metadata
 k <- 0
 # Go through all eartag-values, starting at the lowest value of 1.
-for (j in 1:maxET) {
+for (j in minET:maxET) {
   # For each eartag, go through all rows and look for samples with the same eartag. Each time a sample is found that has this specific eartag, the corresponding row in metadata is added to a new matrix called 'metadataAlphaET'. 
   for (i in 1:AmountOfSamples) {
     if (metadata[i, "ET"] == j) {
@@ -133,17 +134,18 @@ metadataSortAnimal <- metadata
 k <- 0
 #For computing purposes, the mean values are all rounded to one digit after the comma.
 metadataMeanWeightPerMouse[,"Weight"] <- round(MeanWeightPerMouse, digits = 1)
+minWeight <- min(metadataMeanWeightPerMouse[,"Weight"])
 maxWeight <- max(metadataMeanWeightPerMouse[,"Weight"])
 # Go through all mean-weight-values, starting at the lowest value of 1. Since it is impossible to go over decimals in a *for-loop*, I've added a vector 's' that is able to do this which is then called upon in the *for-loop*.
-s <- seq(1, maxWeight+1, by = 0.1) 
+s <- seq(minWeight, maxWeight, by = 0.1) 
 for (j in s) {  
-#PROBLEM IN R: this is very strange and enormously frustrating, but not all numbers within j are 'recognized' by R. I noticed that the mean weights of 11.7, 12.6, 14.2, and 18.9 are not included in the final metadataSortAnimal.I did some troubleshooting, and for some inconsistent reason in R the parameter j does go over all of these values, but the logical operator 'equal to' does simply not result in TRUE when it should be (i.e., when metadataMeanWeightPerMouse[i, "Weight"] == j, for instance in the case of row 44 and weight 14.2). As is shown by the following *if-loop*, R somehow does not recognize 14.2 as an element of j even though it most certainly is. (COde: print the number j whenever one of the following values is recognized and print the number j each time the loop goes => the numbers that are recognized should be displayed twice.)
+#PROBLEM IN R: this is very strange and enormously frustrating, but not all numbers within j are 'recognized' by R. I noticed that the mean weights of 11.7, 12.6, 14.2, and 18.9 are not included in the final metadataSortAnimal.I did some troubleshooting, and for some inconsistent reason in R the parameter j does go over all of these values, but the logical operator 'equal to' does simply not result in TRUE when it should be (i.e., when metadataMeanWeightPerMouse[i, "Weight"] == j, for instance in the case of row 44 and weight 14.2). As is shown by the following *if-loop*, R somehow does not recognize 14.2 as an element of j even though it most certainly is. (Code: print the number j whenever one of the following values is recognized and print the number j each time the loop goes => the numbers that are recognized should be displayed twice.)
 #PS: the subsequent piece of code has exactly the *same* coding, but instead of j 'jumping' over 0.1, it jumps over 0.5. This code runs perfectly.
   if(j == 11.7 || j == 12.6 || j == 14.2 || j == 18.9 || j == 13.7 || j == 12.1 || j == 12.2 || j == 12.3 || j == 12.4 || j == 12.5 || j == 12.6 || j == 12.7 || j == 12.8 || j == 12.9 || j == 12){  
   print(j)}
   print(j)
   
-# For each mean weight, go through all rows and look for samples with the same weight.
+# For each mean weight, go through all rows and store the increasing weights in a new matrix (metadataSortAnimal).
   t <- seq(1, nrow(metadataMeanWeightPerMouse), by = 1)
   for (i in t) {
     if (metadataMeanWeightPerMouse[i, "Weight"] == j) {
@@ -162,11 +164,12 @@ metadataSortAnimal[1:5,]
 #Creating of second table:
 metadataSortSample <- metadata
 k <- 0
+minWeight <- min(metadata[,"Weight"])
 maxWeight <- max(metadata[,"Weight"])
 # Go through all weight-values, starting at the lowest value of 1.
-s <- seq(1, maxWeight, by = 0.5) 
+s <- seq(minWeight, maxWeight, by = 0.5) 
 for (j in s) {
-  # For each weight, go through all rows and look for samples with the same weight. Since it is impossible to go over decimals in a *for-loop*, I've added a vector 's' that is able to do this which is then called upon in the *for-loop*.
+# For each mean weight, go through all rows and store the increasing weights in a new matrix (metadataSortSample).
   for (i in 1:nrow(metadata)) {
     if (metadata[i, "Weight"] == j) {
       k <- k + 1
