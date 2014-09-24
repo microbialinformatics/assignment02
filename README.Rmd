@@ -27,15 +27,97 @@ n.samples <- nrow(metadata)
      
 There were `r n.samples` samples described in `wild.metadata.txt`.
   
-  * How many columns are in the table? What are their names?
-  * How many mice weighed 15 or more grams?
-  * What is the median weight for the mice sampled?
-  * How many PMG mice were there?
-  * How many female PL mice were there?
-  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
-  * Sort the table by the weight of each animal
-  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+  * How many columns are in the table? What are their names?     
+  Answer:    
+  ```{r}
+n.col <- ncol(metadata)
+names.col <- colnames(metadata)
+
+```
+     
+There are `r n.col` columns in the table. And their names are: `r names.col`.
+    
+  * How many mice weighed 15 or more grams?     
+  Answer:   
+  ```{r}
+n.weight_15 <- nrow(metadata[metadata$Weight>=15,])
+
+```
+     
+There are `r n.weight_15` mice weighed 15 or more grams.
+  
+  * What is the median weight for the mice sampled?     
+  Answer:    
+  ```{r}
+median.weight <- median(metadata$Weight)
+
+```
+    
+The median weight for the mice sampled is `r median.weight`.
+  
+  * How many PMG mice were there?    
+  Answer:    
+  ```{r}
+n.PMG <- nrow(metadata[metadata$SP=="PMG",])
+
+```
+   
+There are `r n.PMG` PMG mice.
+  
+  
+  * How many female PL mice were there?      
+  Answer:    
+  ```{r}
+n.f_PL <- nrow(metadata[metadata$SP=="PL" & metadata$Sex=="F",])
+
+``` 
+     
+There are `r n.f_PL` female PL mice.
+  
+  
+  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)      
+  Answer:    
+  ```{r}
+rows_ET <- head(metadata[order(metadata$ET),],5)
+
+```
+     
+The first 5 rows of the table alphabetized by ear tag number are:   
+    ```{r echo=FALSE} 
+  rows_ET
+ ```
+
+  
+  * Sort the table by the weight of each animal    
+Answer:    
+  
+```{r}
+sort_weight <- metadata[order(metadata$Weight),]
+
+```
+     
+  The table sorted by the weight of each animal is:   
+    ```{r echo=FALSE} 
+  sort_weight
+ ```
+
+
+  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?    
+Answer: 
+  
+```{r}
+temp <- table(metadata$Station)
+station_most <- names(temp)[temp == max(temp)]
+
+```
+     
+ The station `r station_most` captured most mice.
+
   * How many mice were captured there?
+
+
+
+
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
