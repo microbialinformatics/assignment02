@@ -159,3 +159,8 @@ mode <- names(counts)[counts==maximum]
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
+```r
+new_file <- metadata[c(-7, -9)]
+write.table(new_file, file="parsedtable.Elmore.txt")
+```
+
