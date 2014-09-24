@@ -141,14 +141,21 @@ A single % sign can't be used for mathematical operations in R. Possibly you mea
 100 %% 3
 ```
 
-This statement will parse the data frame 'metadata' to include only observations in which the weight is exactly 16 and the SP is PMG. There is a typo - weight should be capitalized. 
+This statement will print a parsed data frame 'metadata' to include only observations in which the weight is exactly 16 and the SP is PMG. There is a typo - weight should be capitalized. Also, the && boolean operator is meant for vectors and will not evaluate this data frame correctly. Use a single &.
 ```
-metadata[metadata$Weight==16 && metadata$SP=="PMG",]
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 ```
 
 
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
 
+```r
+metadata$Weight<- factor(metadata$Weight)
+counts <- summary(metadata$Weight)
+maximum <- max(counts)
+mode <- names(counts[maximum])
+```
+**Answer:** The mode for the weight of mice is 14 grams.
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
