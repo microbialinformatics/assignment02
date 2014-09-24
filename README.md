@@ -287,5 +287,12 @@ mode_w <- names(table_w)[table_w == max(table_w)]
 The mode for the weight of the mice in `wild.metadata.txt` is 16, 17.
 
 
-4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
+4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.   
+Answer:    
+
+```r
+new.metadata <- metadata
+new.metadata$Ear <- NULL
+new.metadata$Repro <- NULL
+```
 
