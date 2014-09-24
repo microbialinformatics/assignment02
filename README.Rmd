@@ -1,7 +1,7 @@
 ---
 title: "Assignment 2"
-author: "Patrick D. Schloss"
-date: "September 15, 2014"
+author: "Edna Chiang"
+date: "September 22, 2014"
 output:
   html_document:
     keep_md: yes
@@ -20,12 +20,71 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
+  
+  ```{r}
+  num_row <- nrow(metadata)
+  ```
+  
+  There are `r num_row` samples described.
+  
+  
   * How many columns are in the table? What are their names?
+  
+  
+  ```{r}
+  num_col <- ncol(metadata)
+  col_names <- colnames(metadata)
+  ```
+  
+  There are `r num_col` in the table.
+  Their names are `r col_names`.
+  
+  
   * How many mice weighed 15 or more grams?
+  
+  ```{r}
+  mice15 <- sum(metadata$Weight >= 15)
+  ```
+  
+  `r mice15` mice weighed 15 or more grams.
+  
+  
   * What is the median weight for the mice sampled?
+  
+  ```{r}
+  med_weight <- median(metadata$Weight)
+  ```
+  
+  The median weight for sampled mice was `r med_weight`.
+  
+  
   * How many PMG mice were there?
+  
+  ```{r}
+  PMG_mice <- sum(metadata$SP == "PMG")
+  ```
+  
+  There were `r PMG_mice` PMG mice.
+  
+  
   * How many female PL mice were there?
+  
+  ```{r}
+  F_mice <- sum(metadata$Sex=="F" & metadata$SP=="PL")
+  ```
+  
+  There were `r F_mice` female mice.
+  
+  
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+  
+  ```{r}
+  metadata_ET <- metadata[order(metadata$ET),]
+  ```
+  
+  `r head(metadata_ET, n=5)`
+  
+  
   * Sort the table by the weight of each animal
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
   * How many mice were captured there?
