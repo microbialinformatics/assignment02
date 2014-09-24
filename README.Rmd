@@ -108,8 +108,9 @@ This command will generate a vector named 'r'. The 'runif' part of the command c
 r <- runif(10); order(r)
 ```
 
-```
-100 % 3
+This command needs to have an second '%' added. With two '%%', this command divides the first number by the second number, and yields the remainder as a whole number. So 3 goes into 100 33 times, with 1 left over, so 100 %% 3 returns a 1. 
+```{r}
+100 %% 3
 ```
 
 ```
