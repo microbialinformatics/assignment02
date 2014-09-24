@@ -67,10 +67,11 @@ PMG_num <- length(unique(PMG_mice$ET))
 
 ```r
 female_PL <- subset(metadata, metadata$Sex=='F' & metadata$SP=='PL')  #parse data table to be only female PL mice
+femalePL_observations <- length(female_PL$ET)
 femalePL_unique <- length(unique(female_PL$ET)) #have to do this to avoid repeat samples from same mouse
 ```
 
-**Answer:** The number of female PL mice in the dataset is 9.
+**Answer:** The number of female PL mice in the dataset is 9 of which there are 24 samples.
 
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
   
