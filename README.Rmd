@@ -113,8 +113,9 @@ This command needs to have an second '%' added. With two '%%', this command divi
 100 %% 3
 ```
 
-```
-metadata[metadata$weight==16 && metadata$SP=="PMG",]
+This command searches the data table 'metadata' and looks to output rows where the Weight column value is 16 AND the SP column character is PMG. However, there only needs to be one '&' (for vectors) and the capitalization on 'weight' needed to be fixed as well.
+```{r}
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 ```
 
 
