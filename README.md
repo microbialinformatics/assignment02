@@ -150,12 +150,12 @@ metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
 
 ```r
-metadata$Weight<- factor(metadata$Weight)
-counts <- summary(metadata$Weight)
-maximum <- max(counts)
-mode <- names(counts[maximum])
+metadata$Weight<- factor(metadata$Weight) #turn weight into a factor so it can be counted
+counts <- summary(metadata$Weight) #count the number of each weight
+maximum <- max(counts) #finds the number of occurances of the maximal weight(s)
+mode <- names(counts)[counts==maximum]
 ```
-**Answer:** The mode for the weight of mice is 14 grams.
+**Answer:** The mode for the weight of mice is 16, 17 grams which occurs 12 times.
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
