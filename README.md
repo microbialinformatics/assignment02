@@ -237,26 +237,44 @@ station_most <- names(temp)[temp == max(temp)]
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
+     
+Output a sequence of integers from 1 to 100, and in jumps of 3.     
+The result is:  1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82, 85, 88, 91, 94, 97, 100
+
 ```
 seq(1,100,3)
 ```
+     
 
+Replication. Replicate characters a and b for 10 times.    
+The result is: a, b, a, b, a, b, a, b, a, b, a, b, a, b, a, b, a, b, a, b
 ```
 rep(c("a","b"),10)
 ```
+     
+
 
 ```
 r <- runif(10); order(r)
 ```
+      
+
 
 ```
 100 % 3
 ```
+      
+      
+Find out data in the table when weight equals 16, and SP is PMG at the same time.   
+The result is:
 
+```
+## [1] Date    ET      Station SP      Sex     Age     Repro   Weight  Ear    
+## <0 rows> (or 0-length row.names)
 ```
 metadata[metadata$weight==16 && metadata$SP=="PMG",]
-```
 
+     
 
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
 
