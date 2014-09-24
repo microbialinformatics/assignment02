@@ -129,3 +129,13 @@ The mode for the weight of the mice in the 'wild.metadata.txt' is `r mode.weight
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
+```{r}
+newmetadata <- metadata[,-9]
+finalmetadata <- newmetadata[,-7]
+write.table(finalmetadata, "/Users/daniellegoodman/assignment02/finalmetadata.txt", sep="\t")
+```
+Here are the first 5 rows of the updated file.
+```{r, echo=FALSE} 
+finalmetadata[1:5,]
+```
+
