@@ -82,13 +82,14 @@ sortw.metadata[1:5,]
 ```
 
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
-  
   * How many mice were captured there?
 ```{r}
-many.mice <- metadata$Station == "N20"
+temp <- table(as.vector(metadata$Station))
+station <- names(temp)[temp == max(temp)]
+many.mice <- metadata$Station == station
 n.many.mice <- nrow(metadata[many.mice,])
 ```
-The most mice were captured at the blank station.
+The most mice were captured at the `r station` station.
 There were `r n.many.mice` mice captured there.
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
@@ -117,7 +118,6 @@ This command searches the data table 'metadata' and looks to output rows where t
 ```{r}
 metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 ```
-
 
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
 
