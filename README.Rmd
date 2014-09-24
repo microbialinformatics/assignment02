@@ -103,7 +103,8 @@ This command will generate a vector of the characters "a" "b" repeated 10 times,
 rep(c("a","b"),10)
 ```
 
-```
+This command will generate a vector named 'r'. The 'runif' part of the command creates a vector named 'r' containing ten random values between 0 and 1. The 'order' part of the command yields a vector with the values of 'r' ranked from lowest to highest, denoting these by their position in vector 'r'.
+```{r}
 r <- runif(10); order(r)
 ```
 
