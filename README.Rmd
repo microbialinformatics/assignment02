@@ -93,12 +93,13 @@ There were `r n.many.mice` mice captured there.
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
-This command will generate a vector of values that is every third number from 1 to 100.
+This command will generate a vector of numerical values that is every third number from 1 to 100.
 ```{r}
 seq(1,100,3)
 ```
 
-```
+This command will generate a vector of the characters "a" "b" repeated 10 times, for a total vector length of 20 characters.
+```{r}
 rep(c("a","b"),10)
 ```
 
