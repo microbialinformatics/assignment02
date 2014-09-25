@@ -25,6 +25,8 @@ metadata <- metadata[,-1]
   **Answer:** There are 111 samples described.
   
   
+  
+  
   * How many columns are in the table? What are their names?
   
   ```{r}
@@ -33,6 +35,8 @@ metadata <- metadata[,-1]
   ```
   
   **Answer:** There are 9 in the table. Their names are Date, ET, Station, SP, Sex, AGE, Repro, Weight, & Ear.
+  
+  
   
   
   * How many mice weighed 15 or more grams?
@@ -44,6 +48,8 @@ metadata <- metadata[,-1]
   **Answer:** 77 mice weighed 15 or more grams.
   
   
+  
+  
   * What is the median weight for the mice sampled?
   
   ```{r}
@@ -51,6 +57,8 @@ metadata <- metadata[,-1]
   ```
   
   **Answer:** The median weight for sampled mice was 16.
+  
+  
   
   
   * How many PMG mice were there?
@@ -62,6 +70,8 @@ metadata <- metadata[,-1]
   **Answer:** There were 53 PMG mice.
   
   
+  
+  
   * How many female PL mice were there?
   
   ```{r}
@@ -69,6 +79,8 @@ metadata <- metadata[,-1]
   ```
   
   **Answer:** There were 24 female mice.
+  
+  
   
   
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
@@ -79,12 +91,16 @@ metadata <- metadata[,-1]
   
   **Answer:** 
   
+  ```{r}
   Date ET Station SP Sex Age Repro Weight Ear
 5_26m1 5_26  1     A12 PL   F   A    NE   19.5  14
 6_14m1 6_14  1    AA13 PL   F   A    NE   22.0  14
 7_13m1 7_13  1    AA13 PL   F   A    NE   23.5  14
 7_14m1 7_14  1    CC13 PL   F   A    NE   21.0  15
 5_31m2 5_31  2     CC4 PL   M  SA   ABD   15.0  14
+```
+  
+  
   
   
   * Sort the table by the weight of each animal
@@ -95,6 +111,7 @@ metadata <- metadata[,-1]
   
   **Answer:** 
   
+  ```{r}
           Date ET Station  SP Sex Age Repro Weight Ear
 6_16m37 6_16 37     A12  PL   M   J     A    7.0  12
 7_14m74 7_14 74     N17 PMG   F   J    NT    7.0  14
@@ -207,6 +224,9 @@ metadata <- metadata[,-1]
 6_15m9  6_15  9      M8  PL   F   A    NE   26.0  16
 6_29m9  6_29  9      P6  PL   F   A    NE   27.0  15
 5_31m9  5_31  9      L7  PL   F   A    NE   30.0  15
+```
+  
+  
   
   
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
@@ -220,6 +240,8 @@ metadata <- metadata[,-1]
   **Answer:** N20
   
   
+  
+  
   * How many mice were captured there?
   
   ```{r}
@@ -229,6 +251,8 @@ metadata <- metadata[,-1]
   **Answer:** There were 4 mice.
   
   
+
+
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
@@ -242,11 +266,11 @@ metadata <- metadata[,-1]
 ```
 
 
-
-
 ```
 seq(1,100,3)
 ```
+
+
 
 
 **Answer:** It repeats the sequence *a b* ten times.
@@ -261,28 +285,34 @@ seq(1,100,3)
 rep(c("a","b"),10)
 ```
 
+
+
 **Answer:** The first command randomly generates 10 numbers between a min and max, and assigns them to the variable *r*. Because min and max are not specified, it is assumed to be 0 and 1, respectively. The second command tells you how these numbers should be sorted. Because it is not specified whether we want the numbers to be sorted ascending or descending, the command defaults to ascending.
 
 ```{r}
 [1] 10  6  7  9  2  3  8  4  5  1
 ```
 
-
 ```
 r <- runif(10); order(r)
 ```
 
 
-**Answer:** *%* is not a valid command in R. Instead, *%%* should be used.
+
+
+**Answer:** *%* is not a valid command in R. Instead, *%*%* should be used. This command performs matrix multiplication.
 
 ```{r}
-[1] 1
+     [,1]
+[1,]  300
 ```
 
 
 ```
 100 % 3
 ```
+
+
 
 
 **Answer:** This command does several things. It determines whether the values in the Weight column are equal to 16 (*TRUE*) or if they are not equal to 16 (*FALSE*). It does a similar action in the SP column, determine whether the values are equal (*TRUE*) to PMG or not (*FALSE*). The command combines these two actions by looking for a row that is *TRUE* for both these conditions.
@@ -297,6 +327,8 @@ r <- runif(10); order(r)
 ```
 metadata[metadata$weight==16 && metadata$SP=="PMG",]
 ```
+
+
 
 
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
