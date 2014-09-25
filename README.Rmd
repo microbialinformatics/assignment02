@@ -25,7 +25,7 @@ metadata <- metadata[,-1]
   num_row <- nrow(metadata)
   ```
   
-  There are `r num_row` samples described.
+  Answer: There are `r num_row` samples described.
   
   
   * How many columns are in the table? What are their names?
@@ -36,8 +36,8 @@ metadata <- metadata[,-1]
   col_names <- colnames(metadata)
   ```
   
-  There are `r num_col` in the table.
-  Their names are `r col_names`.
+  Answer: There are `r num_col` in the table.
+          Their names are `r col_names`.
   
   
   * How many mice weighed 15 or more grams?
@@ -46,7 +46,7 @@ metadata <- metadata[,-1]
   mice15 <- sum(metadata$Weight >= 15)
   ```
   
-  `r mice15` mice weighed 15 or more grams.
+  Answer: `r mice15` mice weighed 15 or more grams.
   
   
   * What is the median weight for the mice sampled?
@@ -55,7 +55,7 @@ metadata <- metadata[,-1]
   med_weight <- median(metadata$Weight)
   ```
   
-  The median weight for sampled mice was `r med_weight`.
+  Answer: The median weight for sampled mice was `r med_weight`.
   
   
   * How many PMG mice were there?
@@ -64,7 +64,7 @@ metadata <- metadata[,-1]
   PMG_mice <- sum(metadata$SP == "PMG")
   ```
   
-  There were `r PMG_mice` PMG mice.
+  Answer: There were `r PMG_mice` PMG mice.
   
   
   * How many female PL mice were there?
@@ -73,7 +73,7 @@ metadata <- metadata[,-1]
   F_mice <- sum(metadata$Sex=="F" & metadata$SP=="PL")
   ```
   
-  There were `r F_mice` female mice.
+  Answer: There were `r F_mice` female mice.
   
   
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
@@ -82,7 +82,7 @@ metadata <- metadata[,-1]
   metadata_ET <- metadata[order(metadata$ET),]
   ```
   
-  `r head(metadata_ET, n=5)`
+  Answer: `r head(metadata_ET, n=5)`
   
   
   * Sort the table by the weight of each animal
@@ -91,7 +91,7 @@ metadata <- metadata[,-1]
   metadata_Weight <- metadata[order(metadata$Weight),]
   ```
   
-  `metadata_Weight`
+  Answer: `metadata_Weight`
   
   
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
@@ -102,7 +102,7 @@ metadata <- metadata[,-1]
   most_captured_station <- names(station_sum["N20"])
   ```
   
-  `r most_captured_station`
+  Answer: `r most_captured_station`
   
   
   * How many mice were captured there?
@@ -111,7 +111,7 @@ metadata <- metadata[,-1]
   most_station_mice <- station_sum["N20"]
   ```
   
-  There were `r most_station_mice'
+  Answer: There were `r most_station_mice'
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
