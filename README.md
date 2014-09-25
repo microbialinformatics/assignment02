@@ -16,7 +16,35 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
+  
+  ```r
+  nrow(metadata)
+  ```
+  
+  ```
+  ## [1] 111
+  ```
+  There are 111 samples described in the `wild.metadata.txt`
+  
   * How many columns are in the table? What are their names?
+  
+  ```r
+  ncol(metadata)
+  ```
+  
+  ```
+  ## [1] 9
+  ```
+  
+  ```r
+  colnames(metadata)
+  ```
+  
+  ```
+  ## [1] "Date"    "ET"      "Station" "SP"      "Sex"     "Age"     "Repro"  
+  ## [8] "Weight"  "Ear"
+  ```
+  
   * How many mice weighed 15 or more grams?
   * What is the median weight for the mice sampled?
   * How many PMG mice were there?
