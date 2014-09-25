@@ -32,8 +32,25 @@ metadata <- metadata[,-1]
   ```
   
   * How many mice weighed 15 or more grams?
+  ```{r}
+  FifteenPlus<-subset(metadata,Weight>=15)
+  FifteenPlus
+  nrow(FifteenPlus)
+
+  ```
+  77 mice weighed 15 or more grams
+  
   * What is the median weight for the mice sampled?
+  ```{r}
+  median(metadata$Weight)
+  ```
+  
   * How many PMG mice were there?
+  ```{r}
+  summary(metadata$"SP")
+  ```
+  There are 53 PMG mice.
+  
   * How many female PL mice were there?
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
   * Sort the table by the weight of each animal
