@@ -86,8 +86,32 @@ metadata <- metadata[,-1]
   
   
   * Sort the table by the weight of each animal
+  
+  ```{r}
+  metadata_Weight <- metadata[order(metadata$Weight),]
+  ```
+  
+  `metadata_Weight`
+  
+  
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+  
+  ```{r}
+  station_sum <- summary(metadata$Station)
+  station_sum <- sort(station_sum)
+  most_captured_station <- names(station_sum["N20"])
+  ```
+  
+  `r most_captured_station`
+  
+  
   * How many mice were captured there?
+  
+  ```{r}
+  most_station_mice <- station_sum["N20"]
+  ```
+  
+  There were `r most_station_mice'
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
