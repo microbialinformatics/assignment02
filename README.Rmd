@@ -158,6 +158,13 @@ metadata[metadata$weight==16 && metadata$SP=="PMG",]
 
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
 
+```{r}
+weight_table <- table(metadata$Weight)
+weight_mode <- names(weight_table)[weight_table==max(weight_table)]
+```
+
+**Answer:** The modes are `r weight_mode`
+
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
