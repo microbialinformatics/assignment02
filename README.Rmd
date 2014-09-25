@@ -21,12 +21,12 @@ metadata <- metadata[,-1]
 
   * How many samples were described in the `wild.metadata.txt`?
   * How many columns are in the table? What are their names?
-  * How many mice weighed 15 or more grams?
-  * What is the median weight for the mice sampled?
-  * How many PMG mice were there?
-  * How many female PL mice were there?
+  * How many samples came from mice that weighed 15 or more grams?
+  * What is the median weight of the samples?
+  * How many PMG samples were there?
+  * How many female PL samples were there?
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
-  * Sort the table by the weight of each animal
+  * Sort the table by the weight of the mice that each sample came from
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
   * How many mice were captured there?
 
@@ -54,7 +54,7 @@ metadata[metadata$weight==16 && metadata$SP=="PMG",]
 ```
 
 
-3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
+3.	Calculate the mode for the weights in `wild.metadata.txt`
 
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
