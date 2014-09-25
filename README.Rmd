@@ -110,7 +110,7 @@ metadata <- metadata[,-1]
   most_station_mice <- station_sum["N20"]
   ```
   
-  **Answer:** There were `r most_station_mice'
+  **Answer:** There were `r most_station_mice`
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
@@ -176,5 +176,5 @@ newtable <- newtable[,-8]
 
 **Answer:**
 
-`newtable`
+`r newtable`
 
