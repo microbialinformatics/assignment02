@@ -1,6 +1,6 @@
 # Assignment 2
-Patrick D. Schloss  
-September 15, 2014  
+Edna Chiang 
+September 22, 2014  
 
 Complete the exercises listed below and submit as a pull request to the [Assignment 2 repository](http://www.github.com/microbialinformatics/assignment02).  Format this document approapriately using R markdown and knitr. I would like to see your code blocks and output in the final documents you submit. As much as possible, you should output your solutions by embedding the solution within the text [see this example](https://github.com/microbialinformatics/assignment02/blob/master/example.Rmd). For those cases where there are multiple outputs, make it clear in how you format the text and interweave the solution, what the solution is.
 
@@ -16,34 +16,136 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
+  
+   ```{r}
+  num_row <- nrow(metadata)
+  ```
+  
+  **Answer:** There are `r num_row` samples described.
+  
+  
   * How many columns are in the table? What are their names?
+  
+  ```{r}
+  num_col <- ncol(metadata)
+  col_names <- colnames(metadata)
+  ```
+  
+  **Answer:** There are `r num_col` in the table. Their names are `r col_names`.
+  
+  
   * How many mice weighed 15 or more grams?
+  
+  ```{r}
+  mice15 <- sum(metadata$Weight >= 15)
+  ```
+  
+  **Answer:** `r mice15` mice weighed 15 or more grams.
+  
+  
   * What is the median weight for the mice sampled?
+  
+  ```{r}
+  med_weight <- median(metadata$Weight)
+  ```
+  
+  **Answer:** The median weight for sampled mice was `r med_weight`.
+  
+  
   * How many PMG mice were there?
+  
+   ```{r}
+  PMG_mice <- sum(metadata$SP == "PMG")
+  ```
+  
+  **Answer:** There were `r PMG_mice` PMG mice.
+  
+  
   * How many female PL mice were there?
+  
+  ```{r}
+  F_mice <- sum(metadata$Sex=="F" & metadata$SP=="PL")
+  ```
+  
+  **Answer:** There were `r F_mice` female mice.
+  
+  
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+  
+   ```{r}
+  metadata_ET <- metadata[order(metadata$ET),]
+  ```
+  
+  **Answer:** `r head(metadata_ET, n=5)`
+  
+  
   * Sort the table by the weight of each animal
+  
+   ```{r}
+  metadata_Weight <- metadata[order(metadata$Weight),]
+  ```
+  
+  **Answer:** `metadata_Weight`
+  
+  
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+  
+   ```{r}
+  station_sum <- summary(metadata$Station)
+  station_sum <- sort(station_sum)
+  most_captured_station <- names(station_sum["N20"])
+  ```
+  
+  **Answer:** `r most_captured_station`
+  
+  
   * How many mice were captured there?
+  
+  ```{r}
+  most_station_mice <- station_sum["N20"]
+  ```
+  
+  **Answer:** There were `r most_station_mice`
+  
+  
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
+
+
+**Answer:** It counts from 1 to 100 by 3.
+
 
 ```
 seq(1,100,3)
 ```
 
+
+**Answer:** It repeats the sequence *a b* ten times.
+
+
 ```
 rep(c("a","b"),10)
 ```
+
+**Answer:** The first command randomly generates 10 numbers between a min and max, and assigns them to the variable *r*. Because min and max are not specified, it is assumed to be 0 and 1, respectively. The second command tells you how these numbers should be sorted. Because it is not specified whether we want the numbers to be sorted ascending or descending, the command defaults to ascending.
+
 
 ```
 r <- runif(10); order(r)
 ```
 
+
+**Answer:** *%* is not a valid command in R. Instead, *%%* should be used.
+
+
 ```
 100 % 3
 ```
+
+
+**Answer:** This command does several things. It determines whether the values in the Weight column are equal to 16 (*TRUE*) or if they are not equal to 16 (*FALSE*). It does a similar action in the SP column, determine whether the values are equal (*TRUE*) to PMG or not (*FALSE*). The command combines these two actions by looking for a row that is *TRUE* for both these conditions.
+
 
 ```
 metadata[metadata$weight==16 && metadata$SP=="PMG",]
@@ -53,5 +155,23 @@ metadata[metadata$weight==16 && metadata$SP=="PMG",]
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
 
 
+```{r}
+weight_table <- table(metadata$Weight)
+weight_mode <- names(weight_table)[weight_table==max(weight_table)]
+```
+
+**Answer:** The modes are `r weight_mode`
+
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
+
+
+```{r}
+newtable <- metadata
+newtable <- newtable[,-7]
+newtable <- newtable[,-8]
+```
+
+**Answer:**
+
+`r newtable`
 
