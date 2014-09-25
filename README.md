@@ -300,7 +300,7 @@ r <- runif(10); order(r)
 
 
 
-**Answer:** *%* is not a valid command in R. Instead, *%*%* should be used. This command performs matrix multiplication.
+**Answer:** *%* is not a valid command in R. Instead, %*% should be used. This command performs matrix multiplication.
 
 ```{r}
      [,1]
