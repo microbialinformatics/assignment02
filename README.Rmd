@@ -168,3 +168,13 @@ weight_mode <- names(weight_table)[weight_table==max(weight_table)]
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
+```{r}
+newtable <- metadata
+newtable <- newtable[,-7]
+newtable <- newtable[,-8]
+```
+
+**Answer:**
+
+`newtable`
+
