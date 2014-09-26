@@ -149,22 +149,28 @@ There were 4 mice captured at N20.
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
+
+Gives a sequence of numbers from 1 to 100 rising in increments of 3.
 ```
 seq(1,100,3)
 ```
 
+Repeats a vector sequence ("a" and "b") a total of 10 times
 ```
 rep(c("a","b"),10)
 ```
 
+Gives a series of 10 numbers in uniform distribution from 0 to 1 and sorts them in order
 ```
 r <- runif(10); order(r)
 ```
 
+This code gives an error; may possibly be fixed by changing to "100 %% 3", which gives the remainder when dividing the first number by the second number
 ```
 100 % 3
 ```
 
+Outputs rows in the metadata that correspond to a weight of 16 and SP value of "PMG";  Also, "weight" must be capitalized as that is how the variable is assigned
 ```
 metadata[metadata$weight==16 && metadata$SP=="PMG",]
 ```
