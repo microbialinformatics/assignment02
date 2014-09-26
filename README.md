@@ -190,30 +190,82 @@ metadata <- metadata[,-1]
   ```
   
   * Sort the table by the weight of each animal
+  
+  
+  ```r
+  sort(metadata$Weight)
+  ```
+  
+  ```
+  ##   [1]  7.0  7.0  7.5  9.0  9.0  9.0  9.0  9.5 10.0 10.5 11.0 11.5 12.0 12.0
+  ##  [15] 12.0 12.0 12.0 13.0 13.0 13.0 13.0 13.0 13.0 13.0 13.0 13.5 13.5 13.5
+  ##  [29] 13.5 14.0 14.0 14.0 14.5 14.5 15.0 15.0 15.0 15.0 15.0 15.0 15.0 15.0
+  ##  [43] 15.0 15.0 15.5 16.0 16.0 16.0 16.0 16.0 16.0 16.0 16.0 16.0 16.0 16.0
+  ##  [57] 16.0 16.5 17.0 17.0 17.0 17.0 17.0 17.0 17.0 17.0 17.0 17.0 17.0 17.0
+  ##  [71] 17.5 17.5 17.5 18.0 18.0 18.0 18.0 18.0 18.0 18.0 18.0 18.0 18.0 18.0
+  ##  [85] 18.5 18.5 19.0 19.0 19.0 19.0 19.0 19.5 20.0 21.0 21.0 21.0 21.0 22.0
+  ##  [99] 22.0 22.5 22.5 23.0 23.0 23.0 23.5 24.0 25.0 25.0 26.0 27.0 30.0
+  ```
+  
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+  
+  
   * How many mice were captured there?
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
-```
+Output integers 1 through 100 in steps of 3.
+
+```r
 seq(1,100,3)
 ```
 
 ```
+##  [1]   1   4   7  10  13  16  19  22  25  28  31  34  37  40  43  46  49
+## [18]  52  55  58  61  64  67  70  73  76  79  82  85  88  91  94  97 100
+```
+
+Repeat the character string "a" "b" 10 times.
+
+```r
 rep(c("a","b"),10)
 ```
 
 ```
+##  [1] "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a" "b" "a"
+## [18] "b" "a" "b"
+```
+
+Create a vector with the numbers 1 through 10 and order them randomly.
+
+```r
 r <- runif(10); order(r)
 ```
 
 ```
-100 % 3
+##  [1]  9  3 10  1  6  8  5  7  4  2
+```
+
+is "3" in "100"?
+
+```r
+100%in%3
 ```
 
 ```
-metadata[metadata$weight==16 && metadata$SP=="PMG",]
+## [1] FALSE
+```
+
+Output any rows that contain a weight of 16 grams and are PMG species.
+
+```r
+metadata[metadata$Weight==16 && metadata$SP=="PMG",]
+```
+
+```
+## [1] Date    ET      Station SP      Sex     Age     Repro   Weight  Ear    
+## <0 rows> (or 0-length row.names)
 ```
 
 

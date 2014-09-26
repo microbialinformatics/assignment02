@@ -69,29 +69,36 @@ metadata <- metadata[,-1]
   ```
   
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+  
+  
   * How many mice were captured there?
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
-```
+Output integers 1 through 100 in steps of 3.
+```{r}
 seq(1,100,3)
 ```
 
-```
+Repeat the character string "a" "b" 10 times.
+```{r}
 rep(c("a","b"),10)
 ```
 
-```
+Create a vector with the numbers 1 through 10 and order them randomly.
+```{r}
 r <- runif(10); order(r)
 ```
 
-```
-100 % 3
+is "3" in "100"?
+```{r}
+100%in%3
 ```
 
-```
-metadata[metadata$weight==16 && metadata$SP=="PMG",]
+Output any rows that contain a weight of 16 grams and are PMG species.
+```{r}
+metadata[metadata$Weight==16 && metadata$SP=="PMG",]
 ```
 
 
