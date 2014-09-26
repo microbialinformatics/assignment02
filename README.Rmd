@@ -90,19 +90,19 @@ metadata.sortWt[1:5,] #Display first 5 rows
   
 ```{r}
 summStation<-summary(metadata$Station) #Show number of mice sampled in each station
-sort(summStation) #Sort by number of mice sampled
+maxStation<-names(summStation[summStation==max(summStation)]) #Get name of station with largest number of mice sampled
 ```
 
-The most mice were captured in N20.
+The most mice were captured in `r maxStation`.
 
   * How many mice were captured there?
 
 ```{r}
 sortStation<-sort(summStation, decreasing=TRUE) #Sort by decreasing number of mice sampled
-sortStation[1] #Output first entry (station of highest number of mice sampled)
+capMice<-as.integer(sortStation[1]) #Output first entry (station of highest number of mice sampled) as integer
 ```
 
-There were 4 mice captured at N20.
+There were `r capMice` mice captured at N20.
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 

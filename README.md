@@ -112,22 +112,7 @@ metadata.sortWt[1:5,] #Display first 5 rows
 
 ```r
 summStation<-summary(metadata$Station) #Show number of mice sampled in each station
-sort(summStation) #Sort by number of mice sampled
-```
-
-```
-##  A13   A2   A3 AA10 AA18 AA20  AA6  B19   B3   B4   B6   B8 BB18  CC4  D13 
-##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
-##  D17  D20   D3   D7   D8   E2   E3   F1  F17  F19   F2   F8  H18   H4   H6 
-##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
-##  I11  I12   I6   J1  J10  J15  J16  J17  J20   J6  K19  L15  L16  L18  L20 
-##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
-##   L7  M16  M17  M18   M8   M9   N1  N16  N17   N2   N3   P1  P13  P16  P17 
-##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
-##   P5   P7  A12 AA13  B16   B2  CC5  L11  L19  N19   N4  P11  P15   P2  B18 
-##    1    1    2    2    2    2    2    2    2    2    2    2    2    2    3 
-## CC13  CC2  CC3  CC6  H20   P6  N20 
-##    3    3    3    3    3    3    4
+maxStation<-names(summStation[summStation==max(summStation)]) #Get name of station with largest number of mice sampled
 ```
 
 The most mice were captured in N20.
@@ -137,12 +122,7 @@ The most mice were captured in N20.
 
 ```r
 sortStation<-sort(summStation, decreasing=TRUE) #Sort by decreasing number of mice sampled
-sortStation[1] #Output first entry (station of highest number of mice sampled)
-```
-
-```
-## N20 
-##   4
+capMice<-as.integer(sortStation[1]) #Output first entry (station of highest number of mice sampled) as integer
 ```
 
 There were 4 mice captured at N20.
