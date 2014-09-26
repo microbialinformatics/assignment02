@@ -96,7 +96,7 @@ The first 5 rows of the table alphabetized by ear tag number are:
        
 
   * ##### Sort the table by the weight of the mice that each sample came from    
-*Answer: *     
+*Answer:*     
   
 
 ```r
@@ -224,7 +224,7 @@ sort_by_weight <- z[o,]
 
 
   * ##### The `Station` column indicates where the mice were sampled. Where were the most mice captured?    
-*Answer: *  
+*Answer:* 
   
 
 ```r
@@ -235,7 +235,7 @@ station_most <- names(temp)[temp == max(temp)]
  The station N20 captured most mice.
 
   * ##### How many mice were captured there?     
-*Answer: *      
+*Answer:*     
 
 ```r
 n.mice_captured <- nrow(metadata[metadata$Station == "N20",])
@@ -285,7 +285,7 @@ metadata[metadata$weight==16 && metadata$SP=="PMG",]
  
 
 ##### 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`    
-*Answer: *     
+*Answer:*     
 
 ```r
 table_w <- table(metadata$Weight)
@@ -296,7 +296,7 @@ The mode for the weight of the mice in `wild.metadata.txt` is 16, 17.
 
 
 ##### 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.   
-*Answer: *     
+*Answer:*     
 
 ```r
 new.metadata <- metadata
