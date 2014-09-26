@@ -302,5 +302,6 @@ Answer:
 new.metadata <- metadata
 new.metadata$Ear <- NULL
 new.metadata$Repro <- NULL
+write.table(new.metadata,"C:/Users/HUI/Documents/assignment02/new.metadata.txt",sep="\t")
 ```
 
