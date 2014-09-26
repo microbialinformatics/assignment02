@@ -127,13 +127,15 @@ This code gives an error; may possibly be fixed by changing to "100 %% 3", which
 100 % 3
 ```
 
-Outputs rows in the metadata that correspond to a weight of 16 and SP value of "PMG";  Also, "weight" must be capitalized as that is how the variable is assigned
+Outputs samples in the metadata that correspond to a weight of 16 and SP value of "PMG";  Also, "weight" must be capitalized as that is how the variable is assigned and && must be changed to &
 ```
 metadata[metadata$weight==16 && metadata$SP=="PMG",]
 ```
 
 
 3.	Calculate the mode for the weights in `wild.metadata.txt`
+
+
 
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
