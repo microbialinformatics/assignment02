@@ -173,6 +173,22 @@ metadata <- metadata[,-1]
   ```
   
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+  
+  ```r
+   orderET<-order(metadata$ET)
+   orderET5<-metadata[orderET,]
+   head(orderET5,n=5)
+  ```
+  
+  ```
+  ##        Date ET Station SP Sex Age Repro Weight Ear
+  ## 5_26m1 5_26  1     A12 PL   F   A    NE   19.5  14
+  ## 6_14m1 6_14  1    AA13 PL   F   A    NE   22.0  14
+  ## 7_13m1 7_13  1    AA13 PL   F   A    NE   23.5  14
+  ## 7_14m1 7_14  1    CC13 PL   F   A    NE   21.0  15
+  ## 5_31m2 5_31  2     CC4 PL   M  SA   ABD   15.0  14
+  ```
+  
   * Sort the table by the weight of each animal
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
   * How many mice were captured there?
