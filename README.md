@@ -155,15 +155,23 @@ metadata <- metadata[,-1]
   * How many PMG mice were there?
   
   ```r
-  summary(metadata$"SP")
+  nrow(metadata[metadata$SP=="PMG",])
   ```
   
   ```
-  ##  PL PMG 
-  ##  58  53
+  ## [1] 53
   ```
   
-  * How many female PL mice were there?
+  * How many female PL mice were there? 
+  
+  ```r
+  nrow(metadata[metadata$SP=="PL"&metadata$Sex=="F",])
+  ```
+  
+  ```
+  ## [1] 24
+  ```
+  
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
   * Sort the table by the weight of each animal
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
