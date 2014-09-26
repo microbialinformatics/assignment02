@@ -179,7 +179,12 @@ metadata[metadata$weight==16 && metadata$SP=="PMG",]
 3.	Calculate the mode for the weights in `wild.metadata.txt`
 
 
+```r
+tabWeight<-table(metadata$Weight) #Convert into a table
+modeWt<-names(tabWeight[tabWeight==max(tabWeight)]) #Get the weights that have the highest number of occurrences
+```
 
+The mode for the weights is 16, 17
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
