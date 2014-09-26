@@ -348,6 +348,7 @@ weight_mode <- names(weight_table)[weight_table==max(weight_table)]
 newtable <- metadata
 newtable <- newtable[,-7]
 newtable <- newtable[,-8]
+write.table(newtable, "newtable.txt")
 ```
 
 **Answer:**
