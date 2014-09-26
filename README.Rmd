@@ -1,7 +1,7 @@
 ---
 title: "Assignment 2"
-author: "Patrick D. Schloss"
-date: "September 15, 2014"
+author: "Isaiah Song"
+date: "September 26, 2014"
 output:
   html_document:
     keep_md: yes
@@ -20,16 +20,89 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
+  
+```{r}
+numSamples<-nrow(metadata) #Number of rows
+```
+
+There are as many samples as there are rows, equaling `r numSamples`.
+  
   * How many columns are in the table? What are their names?
+  
+```{r}
+numColumns<-ncol(metadata) #Number of columns
+namColumns<-colnames(metadata) #Names of columns
+
+```
+
+There are `r numColumns` columns and their names are: `r namColumns`.
+
   * How many samples came from mice that weighed 15 or more grams?
+  
+```{r}
+wtGr15<-metadata[metadata$Weight>=15,] #Output of samples weighing 15 grams or greater
+samGr15<-nrow(wtGr15) #Number of rows
+```
+
+The number of samples that came from mice that weighed 15 or more grams is `r samGr15`.
+  
   * What is the median weight of the samples?
+  
+```{r}
+medWt<-median(metadata$Weight) #Median of sample weights
+```
+
+The median weight is `r medWt`.
+
   * How many PMG samples were there?
+  
+```{r}
+PMG<-metadata[metadata$SP=="PMG",] #Output of samples of PMG
+numPMG<-nrow(PMG) #Number of rows
+```
+
+There were `r numPMG` PMG samples.
+
   * How many female PL samples were there?
-  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
-  * Sort the table by the weight of the mice that each sample came from
-  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+  
+```{r}
+PL_F<-metadata[metadata$SP=="PL"&metadata$Sex=="F",] #Output of samples of female PL
+numPL_F<-nrow(PL_F) #Number of rows
+```
+
+There were `r numPL_F` female PL samples.
+
+  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table) 
+  
+```{r}
+metadata.sortET<-metadata[order(metadata$ET),] #Sort by ET order
+metadata.sortET[1:5,] #Display first 5 rows
+```
+
+  * Sort the table by the weight of the mice that each sample came from  
+  
+```{r}
+metadata.sortWt<-metadata[order(metadata$Weight),] #Sort by weight
+metadata.sortWt[1:5,] #Display first 5 rows
+```
+
+  * The `Station` column indicates where the mice were sampled. Where were the most mice captured? 
+  
+```{r}
+summStation<-summary(metadata$Station) #Show number of mice sampled in each station
+sort(summStation) #Sort by number of mice sampled
+```
+
+The most mice were captured in N20.
+
   * How many mice were captured there?
 
+```{r}
+sortStation<-sort(summStation, decreasing=TRUE) #Sort by decreasing number of mice sampled
+sortStation[1] #Output first entry (station of highest number of mice sampled)
+```
+
+There were 4 mice captured at N20.
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 

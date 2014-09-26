@@ -1,6 +1,6 @@
 # Assignment 2
-Patrick D. Schloss  
-September 15, 2014  
+Isaiah Song  
+September 26, 2014  
 
 Complete the exercises listed below and submit as a pull request to the [Assignment 2 repository](http://www.github.com/microbialinformatics/assignment02).  Format this document approapriately using R markdown and knitr. I would like to see your code blocks and output in the final documents you submit. As much as possible, you should output your solutions by embedding the solution within the text [see this example](https://github.com/microbialinformatics/assignment02/blob/master/example.Rmd). For those cases where there are multiple outputs, make it clear in how you format the text and interweave the solution, what the solution is.
 
@@ -16,16 +16,136 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
+  
+
+```r
+numSamples<-nrow(metadata) #Number of rows
+```
+
+There are as many samples as there are rows, equaling 111.
+  
   * How many columns are in the table? What are their names?
+  
+
+```r
+numColumns<-ncol(metadata) #Number of columns
+namColumns<-colnames(metadata) #Names of columns
+```
+
+There are 9 columns and their names are: Date, ET, Station, SP, Sex, Age, Repro, Weight, Ear.
+
   * How many samples came from mice that weighed 15 or more grams?
+  
+
+```r
+wtGr15<-metadata[metadata$Weight>=15,] #Output of samples weighing 15 grams or greater
+samGr15<-nrow(wtGr15) #Number of rows
+```
+
+The number of samples that came from mice that weighed 15 or more grams is 77.
+  
   * What is the median weight of the samples?
+  
+
+```r
+medWt<-median(metadata$Weight) #Median of sample weights
+```
+
+The median weight is 16.
+
   * How many PMG samples were there?
+  
+
+```r
+PMG<-metadata[metadata$SP=="PMG",] #Output of samples of PMG
+numPMG<-nrow(PMG) #Number of rows
+```
+
+There were 53 PMG samples.
+
   * How many female PL samples were there?
-  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
-  * Sort the table by the weight of the mice that each sample came from
-  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+  
+
+```r
+PL_F<-metadata[metadata$SP=="PL"&metadata$Sex=="F",] #Output of samples of female PL
+numPL_F<-nrow(PL_F) #Number of rows
+```
+
+There were 24 female PL samples.
+
+  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table) 
+  
+
+```r
+metadata.sortET<-metadata[order(metadata$ET),] #Sort by ET order
+metadata.sortET[1:5,] #Display first 5 rows
+```
+
+```
+##        Date ET Station SP Sex Age Repro Weight Ear
+## 5_26m1 5_26  1     A12 PL   F   A    NE   19.5  14
+## 6_14m1 6_14  1    AA13 PL   F   A    NE   22.0  14
+## 7_13m1 7_13  1    AA13 PL   F   A    NE   23.5  14
+## 7_14m1 7_14  1    CC13 PL   F   A    NE   21.0  15
+## 5_31m2 5_31  2     CC4 PL   M  SA   ABD   15.0  14
+```
+
+  * Sort the table by the weight of the mice that each sample came from  
+  
+
+```r
+metadata.sortWt<-metadata[order(metadata$Weight),] #Sort by weight
+metadata.sortWt[1:5,] #Display first 5 rows
+```
+
+```
+##         Date ET Station  SP Sex Age Repro Weight Ear
+## 6_16m37 6_16 37     A12  PL   M   J     A    7.0  12
+## 7_14m74 7_14 74     N17 PMG   F   J    NT    7.0  14
+## 5_25m3  5_25  3    BB18  PL   M   J   ABD    7.5  13
+## 6_29m48 6_29 48      P7  PL   F   J    NT    9.0  11
+## 7_14m79 7_14 79     J20 PMG   F   J    NT    9.0  12
+```
+
+  * The `Station` column indicates where the mice were sampled. Where were the most mice captured? 
+  
+
+```r
+summStation<-summary(metadata$Station) #Show number of mice sampled in each station
+sort(summStation) #Sort by number of mice sampled
+```
+
+```
+##  A13   A2   A3 AA10 AA18 AA20  AA6  B19   B3   B4   B6   B8 BB18  CC4  D13 
+##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
+##  D17  D20   D3   D7   D8   E2   E3   F1  F17  F19   F2   F8  H18   H4   H6 
+##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
+##  I11  I12   I6   J1  J10  J15  J16  J17  J20   J6  K19  L15  L16  L18  L20 
+##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
+##   L7  M16  M17  M18   M8   M9   N1  N16  N17   N2   N3   P1  P13  P16  P17 
+##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
+##   P5   P7  A12 AA13  B16   B2  CC5  L11  L19  N19   N4  P11  P15   P2  B18 
+##    1    1    2    2    2    2    2    2    2    2    2    2    2    2    3 
+## CC13  CC2  CC3  CC6  H20   P6  N20 
+##    3    3    3    3    3    3    4
+```
+
+The most mice were captured in N20.
+
   * How many mice were captured there?
 
+
+```r
+sortStation<-sort(summStation, decreasing=TRUE) #Sort by decreasing number of mice sampled
+sortStation[1] #Output first entry (station of highest number of mice sampled)
+```
+
+```
+## N20 
+##   4
+```
+
+There were 4 mice captured at N20.
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
