@@ -13,19 +13,20 @@ rownames(metadata) <- metadata$Group
 metadata <- metadata[,-1]
 ```
 
-1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
+##### 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
-  * How many samples were described in the `wild.metadata.txt`?   
-  Answer:   
+  * ##### How many samples were described in the `wild.metadata.txt`?   
+  *Answer: *  
   
   ```r
   n.samples <- nrow(metadata)
   ```
      
-There were 111 samples described in `wild.metadata.txt`.
+There were 111 samples described in `wild.metadata.txt`. 
+
   
-  * How many columns are in the table? What are their names?     
-  Answer:    
+  * ##### How many columns are in the table? What are their names?     
+  *Answer: *     
   
   ```r
   n.col <- ncol(metadata)
@@ -33,27 +34,30 @@ There were 111 samples described in `wild.metadata.txt`.
   ```
      
 There are 9 columns in the table. And their names are: Date, ET, Station, SP, Sex, Age, Repro, Weight, Ear.
+
     
-  * How many samples came from mice that weighed 15 or more grams?     
-  Answer:   
+  * ##### How many samples came from mice that weighed 15 or more grams?     
+  *Answer: *    
   
   ```r
   n.weight_15 <- nrow(metadata[metadata$Weight>=15,])
   ```
      
 There are 77 mice weighed 15 or more grams.
+
   
-  * What is the median weight for the mice sampled?     
-  Answer:    
+  * ##### What is the median weight for the mice sampled?     
+  *Answer: *     
   
   ```r
   median.weight <- median(metadata$Weight)
   ```
     
 The median weight for the mice sampled is 16.
+
   
-  * How many PMG mice were there?    
-  Answer:    
+  * ##### How many PMG mice were there?    
+  *Answer: *     
   
   ```r
   n.PMG <- nrow(metadata[metadata$SP=="PMG",])
@@ -62,8 +66,8 @@ The median weight for the mice sampled is 16.
 There are 53 PMG mice.
   
   
-  * How many female PL mice were there?      
-  Answer:    
+  * ##### How many female PL mice were there?      
+  *Answer: *     
   
   ```r
   n.f_PL <- nrow(metadata[metadata$SP=="PL" & metadata$Sex=="F",])
@@ -72,8 +76,8 @@ There are 53 PMG mice.
 There are 24 female PL mice.
   
   
-  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)      
-  Answer:    
+  * ##### Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)      
+  *Answer: *     
   
   ```r
   rows_ET <- head(metadata[order(metadata$ET),],5)
@@ -89,10 +93,10 @@ The first 5 rows of the table alphabetized by ear tag number are:
     ## 7_14m1 7_14  1    CC13 PL   F   A    NE   21.0  15
     ## 5_31m2 5_31  2     CC4 PL   M  SA   ABD   15.0  14
     ```
+       
 
-  
-  * Sort the table by the weight of the mice that each sample came from    
-Answer:    
+  * ##### Sort the table by the weight of the mice that each sample came from    
+*Answer: *     
   
 
 ```r
@@ -219,8 +223,8 @@ sort_by_weight <- z[o,]
     ```
 
 
-  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?    
-Answer: 
+  * ##### The `Station` column indicates where the mice were sampled. Where were the most mice captured?    
+*Answer: *  
   
 
 ```r
@@ -230,8 +234,8 @@ station_most <- names(temp)[temp == max(temp)]
      
  The station N20 captured most mice.
 
-  * How many mice were captured there?     
-Answer:     
+  * ##### How many mice were captured there?     
+*Answer: *      
 
 ```r
 n.mice_captured <- nrow(metadata[metadata$Station == "N20",])
@@ -241,51 +245,47 @@ n.mice_captured <- nrow(metadata[metadata$Station == "N20",])
 
 
 
-2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
+##### 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
 
      
-Output a sequence of integers from 1 to 100, and in jumps of 3.     
-The result is:  1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82, 85, 88, 91, 94, 97, 100
+`Output a sequence of integers from 1 to 100, and in jumps of 3.
+The result is:  1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82, 85, 88, 91, 94, 97, 100`
 
 ```
 seq(1,100,3)
 ```
      
 
-Replication. Replicate characters a and b for 10 times.    
-The result is: a, b, a, b, a, b, a, b, a, b, a, b, a, b, a, b, a, b, a, b
+`Replication. Replicate characters a and b for 10 times. 
+The result is: a, b, a, b, a, b, a, b, a, b, a, b, a, b, a, b, a, b, a, b`
 ```
 rep(c("a","b"),10)
 ```
      
 
-The first command is to generate a vector with 10 random numbers.      
-The second command is to get the correct order of the numbers we have created in the vector. 
+`The first command is to generate a vector with 10 random numbers.
+The second command is to get the correct order of the numbers we have created in the vector.` 
 ```
 r <- runif(10); order(r)
 ```
       
 
-The reminder of 100 divided by 3.     
-The result is: 1.
+`The reminder of 100 divided by 3.
+The result is: 1.`
 ```
 100 %% 3
 ```
       
       
-Find out data in the table when weight equals 16, and SP is PMG at the same time.   
-The result is:
-
-```
-## [1] Date    ET      Station SP      Sex     Age     Repro   Weight  Ear    
-## <0 rows> (or 0-length row.names)
+`Find out data in the table when weight equals 16, and SP is PMG at the same time.`
 ```
 metadata[metadata$weight==16 && metadata$SP=="PMG",]
+```
+ 
+ 
 
-     
-
-3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`    
-Answer:    
+##### 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`    
+*Answer: *     
 
 ```r
 table_w <- table(metadata$Weight)
@@ -295,8 +295,8 @@ mode_w <- names(table_w)[table_w == max(table_w)]
 The mode for the weight of the mice in `wild.metadata.txt` is 16, 17.
 
 
-4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.   
-Answer:    
+##### 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.   
+*Answer: *     
 
 ```r
 new.metadata <- metadata
