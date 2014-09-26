@@ -70,8 +70,15 @@ metadata <- metadata[,-1]
   
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
   
+  ```{r}
+  St.metadata<-metadata$Station
+  sort(table(St.metadata))
+  ```
+  Station N20 had the most mice collected.
+  
   
   * How many mice were captured there?
+  There were 4 mice collected at station N20.
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
