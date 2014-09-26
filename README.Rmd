@@ -145,15 +145,17 @@ rep(c("a","b"),10)
 ```
      
 
-
+The first command is to generate a vector with 10 random numbers.      
+The second command is to get the correct order of the numbers we have created in the vector. 
 ```
 r <- runif(10); order(r)
 ```
       
 
-
+The reminder of 100 divided by 3.     
+The result is: `r 100 %% 3`.
 ```
-100 % 3
+100 %% 3
 ```
       
       
