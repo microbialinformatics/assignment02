@@ -34,7 +34,7 @@ There were 111 samples described in `wild.metadata.txt`.
      
 There are 9 columns in the table. And their names are: Date, ET, Station, SP, Sex, Age, Repro, Weight, Ear.
     
-  * How many mice weighed 15 or more grams?     
+  * How many samples came from mice that weighed 15 or more grams?     
   Answer:   
   
   ```r
@@ -91,12 +91,14 @@ The first 5 rows of the table alphabetized by ear tag number are:
     ```
 
   
-  * Sort the table by the weight of each animal    
+  * Sort the table by the weight of the mice that each sample came from    
 Answer:    
   
 
 ```r
-sort_weight <- metadata[order(metadata$Weight),]
+o <- order(metadata$Weight)
+z <- metadata
+sort_by_weight <- z[o,]
 ```
      
   The table sorted by the weight of each animal is:   
@@ -228,10 +230,14 @@ station_most <- names(temp)[temp == max(temp)]
      
  The station N20 captured most mice.
 
-  * How many mice were captured there?
+  * How many mice were captured there?     
+Answer:     
 
-
-
+```r
+n.mice_captured <- nrow(metadata[metadata$Station == "N20",])
+```
+    
+4 mice were captured there.
 
 
 
