@@ -107,3 +107,8 @@ metadata[metadata$Weight==16 && metadata$SP=="PMG",]
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
+```{r}
+metadataShort<-metadata[,-9]
+metadata.narrow<-metadataShort[,-7]
+metadata.narrow
+```
