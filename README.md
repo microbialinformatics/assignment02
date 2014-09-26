@@ -168,3 +168,9 @@ The mode for the weights is 16, 17
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
+
+```r
+newmetadata<-metadata[,-7] #Excludes column 7 ("Repro")
+newmetadata2<-newmetadata[,-8] #Excludes column 8 of new metadata ("Ear")
+write.table(newmetadata2, "C:/Users/Isaiah/Desktop/new.wild.metadata.txt") #Writes newmetadata2 to text file on desktop
+```
