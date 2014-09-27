@@ -66,8 +66,16 @@ metadata$ET<-factor(metadata$ET)
 et.sort<-metadata[order(metadata$ET),]
 et.sort[1:5,]
 ```
-
+  
+  
+  
   * Sort the table by the weight of each animal
+```{r}
+metadata$Weight<-factor(metadata$Weight)
+weight.sort<-metadata[order(metadata$Weight),]
+weight.sort[1:5,]
+``` 
+  
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
   * How many mice were captured there?
 
