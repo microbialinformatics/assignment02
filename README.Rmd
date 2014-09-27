@@ -77,7 +77,20 @@ weight.sort[1:5,]
 ``` 
   
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+```{r}
+
+best.station<-sort(table(metadata["Station"]), decreasing=TRUE)[1]
+```
+      The most mice were sampled at station`r names(best.station)`.
+  
+   
   * How many mice were captured there?
+         
+```{r}
+N20mice<-metadata[metadata["Station"]=="N20",]
+N20.unique<-N20mice[!duplicated(N20mice["ET"]),]
+```
+There were `r nrow(N20mice)` captures of `r nrow(N20.unique)` unique individuals at  `r names(best.station)`.
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
