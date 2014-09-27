@@ -60,8 +60,13 @@ pl.mice.f<-nrow(metadata[metadata$SP=="PL" & metadata$Sex=="F",])
       There were `r pl.mice.f` female PL mice.
       
       
- 
-  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+ * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+```{r}
+metadata$ET<-factor(metadata$ET)
+et.sort<-metadata[order(metadata$ET),]
+et.sort[1:5,]
+```
+
   * Sort the table by the weight of each animal
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
   * How many mice were captured there?
