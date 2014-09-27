@@ -147,7 +147,7 @@ r <- runif(10); order(r)
 ```
 
 ```
-##  [1]  6  4 10  7  8  2  9  1  3  5
+##  [1]  6  5  7  8 10  9  2  4  1  3
 ```
 
 What is 100 divided by 3?
@@ -182,4 +182,11 @@ metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
+
+
+```r
+new.metadata1<-metadata[,-7]
+new.metadata<-new.metadata1[,-8]
+write.table(new.metadata, file="new.metadata.txt")
+```
 
