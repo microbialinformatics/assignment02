@@ -40,6 +40,13 @@ mice.weight15<-nrow(metadata[metadata$Weight>=15,])
     There were `r mice.weight15` mice that weighed 15 or more grams.
   
   * What is the median weight for the mice sampled?
+```{r}
+med.weight<-median(metadata$Weight)
+```
+      The median mice weight was `r med.weight` grams.
+      
+      
+      
   * How many PMG mice were there?
   * How many female PL mice were there?
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
