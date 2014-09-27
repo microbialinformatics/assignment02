@@ -147,7 +147,7 @@ r <- runif(10); order(r)
 ```
 
 ```
-##  [1]  6  5  7  8 10  9  2  4  1  3
+##  [1]  3  8  5  9  6 10  1  7  4  2
 ```
 
 What is 100 divided by 3?
@@ -179,6 +179,12 @@ metadata[metadata$Weight==16 & metadata$SP=="PMG",]
 ```
 
 3.	Calculate the mode for the weight of the mice in `wild.metadata.txt`
+
+```r
+weight.mode<-sort(table(metadata$Weight), decreasing=TRUE)[1]
+```
+
+The mode of the mice weight is 12.
 
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
