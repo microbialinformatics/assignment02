@@ -24,10 +24,17 @@ num.samples<-nrow(metadata)
   There were `r num.samples` samples
   
   
+   * How many columns are in the table? What are their names
+  
+```{r}
+num.columns<-ncol(metadata)
+col.names<-colnames(metadata)
+```  
+  There are `r num.columns` columns with the following names: `r col.names`
   
   
   
-  * How many columns are in the table? What are their names
+  
   * How many mice weighed 15 or more grams?
   * What is the median weight for the mice sampled?
   * How many PMG mice were there?
