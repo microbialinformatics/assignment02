@@ -171,7 +171,7 @@ metadata <- metadata[,-1]
   ## [1] 53
   ```
   
-  There were 53*Peromyscus maniculatis* mice sampled. 
+  There were 53 *Peromyscus maniculatis* mice sampled. 
   
   * How many female PL mice were there? 
   
@@ -328,29 +328,9 @@ metadata <- metadata[,-1]
   
   ```r
   St.metadata<-metadata$Station
-  sort(table(St.metadata))
-  ```
-  
-  ```
-  ## St.metadata
-  ##  A13   A2   A3 AA10 AA18 AA20  AA6  B19   B3   B4   B6   B8 BB18  CC4  D13 
-  ##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
-  ##  D17  D20   D3   D7   D8   E2   E3   F1  F17  F19   F2   F8  H18   H4   H6 
-  ##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
-  ##  I11  I12   I6   J1  J10  J15  J16  J17  J20   J6  K19  L15  L16  L18  L20 
-  ##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
-  ##   L7  M16  M17  M18   M8   M9   N1  N16  N17   N2   N3   P1  P13  P16  P17 
-  ##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
-  ##   P5   P7  A12 AA13  B16   B2  CC5  L11  L19  N19   N4  P11  P15   P2  B18 
-  ##    1    1    2    2    2    2    2    2    2    2    2    2    2    2    3 
-  ## CC13  CC2  CC3  CC6  H20   P6  N20 
-  ##    3    3    3    3    3    3    4
-  ```
-  
-  ```r
   st.metadata<-sort(table(St.metadata))
   ```
-  Station 82 had the most mice collected.
+  Station N20 had the most mice collected.
   
   
   * How many mice were captured there?
@@ -418,19 +398,17 @@ metadata[metadata$Weight==16 && metadata$SP=="PMG",]
 
 ```r
 w.metadata<-metadata$Weight
-sort(table(w.metadata))
+Wmetadata<-(sort(table(w.metadata)))
+MWmetadata<-tail(Wmetadata,n=2)
+MWmetadata
 ```
 
 ```
 ## w.metadata
-##  7.5  9.5   10 10.5   11 11.5 15.5 16.5 19.5   20 23.5   24   26   27   30 
-##    1    1    1    1    1    1    1    1    1    1    1    1    1    1    1 
-##    7 14.5 18.5   22 22.5   25   14 17.5   23    9 13.5   21   12   19   13 
-##    2    2    2    2    2    2    3    3    3    4    4    4    5    5    8 
-##   15   18   16   17 
-##   10   11   12   12
+## 16 17 
+## 12 12
 ```
-There are two modes for the Weights, both 16 grams and 17 grams are recorded 12 times. 
+There are two modes for the Weights
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 

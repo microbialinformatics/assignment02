@@ -84,10 +84,9 @@ metadata <- metadata[,-1]
   
   ```{r}
   St.metadata<-metadata$Station
-  sort(table(St.metadata))
   st.metadata<-sort(table(St.metadata))
   ```
-  Station `r which.max(st.metadata)` had the most mice collected.
+  Station N20 had the most mice collected.
   
   
   * How many mice were captured there?
@@ -126,9 +125,11 @@ metadata[metadata$Weight==16 && metadata$SP=="PMG",]
 
 ```{r}
 w.metadata<-metadata$Weight
-sort(table(w.metadata))
+Wmetadata<-(sort(table(w.metadata)))
+MWmetadata<-tail(Wmetadata,n=2)
+MWmetadata
 ```
-There are two modes for the Weights, both 16 grams and 17 grams are recorded 12 times. 
+There are two modes for the Weights
 
 4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
 
