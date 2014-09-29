@@ -20,16 +20,22 @@ metadata <- metadata[,-1]
 1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
 
   * How many samples were described in the `wild.metadata.txt`?
+
   ```{r}
   nrow(metadata)
   ```
-  There are 111 samples described in the `wild.metadata.txt`
+  
+  There are `r nrow(metadata)` samples described in the `wild.metadata.txt`
+  
   
   * How many columns are in the table? What are their names?
   ```{r}
   ncol(metadata)
   colnames(metadata)
   ```
+  
+  There are `r ncol(metadata)` columns in the table. The column names are `r colnames(metadata)`.
+  
   
   * How many mice weighed 15 or more grams?
   ```{r}
@@ -38,22 +44,29 @@ metadata <- metadata[,-1]
   nrow(FifteenPlus)
 
   ```
-  77 mice weighed 15 or more grams
+  
+  `r nrow(FifteenPlus)` mice weighed 15 or more grams
   
   * What is the median weight for the mice sampled?
   ```{r}
   median(metadata$Weight)
   ```
   
+  The median weight of the mice sampled is `r median(metadata$Weight)`
+  
   * How many PMG mice were there?
   ```{r}
   nrow(metadata[metadata$SP=="PMG",])
   ```
   
+  There were `r nrow(metadata[metadata$SP=="PMG",])` *Peromyscus maniculatis* mice sampled. 
+  
   * How many female PL mice were there? 
   ```{r}
   nrow(metadata[metadata$SP=="PL"&metadata$Sex=="F",])
   ```
+  
+  There were `r nrow(metadata[metadata$SP=="PL"&metadata$Sex=="F",])` female *Peromyscus leucopis* mice sampled.
   
   * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
   ```{r}
@@ -61,11 +74,10 @@ metadata <- metadata[,-1]
  orderET5<-metadata[orderET,]
  head(orderET5,n=5)
   ```
-  
+ 
   * Sort the table by the weight of each animal
-  
   ```{r}
-  sort(metadata$Weight)
+  metadata[order(metadata$Weight),]
   ```
   
   * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
@@ -73,12 +85,13 @@ metadata <- metadata[,-1]
   ```{r}
   St.metadata<-metadata$Station
   sort(table(St.metadata))
+  st.metadata<-sort(table(St.metadata))
   ```
-  Station N20 had the most mice collected.
+  Station `r which.max(st.metadata)` had the most mice collected.
   
   
   * How many mice were captured there?
-  There were 4 mice collected at station N20.
+  There were `r max(st.metadata)` mice collected at station N20.
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
