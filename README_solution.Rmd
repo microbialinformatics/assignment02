@@ -69,7 +69,7 @@ head(sorted, n=5)
 ```{r}
 count.sites <- table(metadata$Station)
 most.freq <- names(count.sites)[which.max(count.sites)]
-n.most.freq <- which.max(count.sites)
+n.most.freq <- max(count.sites)
 ```
 
 More mice were sampled from Station `r most.freq` than from any other site.

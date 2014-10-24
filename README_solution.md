@@ -86,7 +86,7 @@ head(sorted, n=5)
 ```r
 count.sites <- table(metadata$Station)
 most.freq <- names(count.sites)[which.max(count.sites)]
-n.most.freq <- which.max(count.sites)
+n.most.freq <- max(count.sites)
 ```
 
 More mice were sampled from Station N20 than from any other site.
@@ -94,7 +94,7 @@ More mice were sampled from Station N20 than from any other site.
   
   * How many mice were captured there?
 
-A total of 70 mice were captured there.
+A total of 4 mice were captured there.
 
 
 2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
@@ -133,7 +133,7 @@ r <- runif(10); order(r)
 ```
 
 ```
-##  [1] 10  6  1  4  5  3  9  2  7  8
+##  [1]  6  2  1  3  7 10  9  4  5  8
 ```
 
 
