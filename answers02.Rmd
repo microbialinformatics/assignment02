@@ -1,0 +1,196 @@
+---
+title: "answers02.Rmd"
+author: "Matt Doherty"
+date: "April 17, 2015"
+output: html_document
+---
+```{r}
+metadata <- read.table(file="~/Assignment02 git/wild.metadata.txt", header=T)
+rownames(metadata) <- metadata$Group
+metadata <- metadata[,-1]
+
+n.total <- nrow(metadata) #total rows == total samples
+
+```
+1.  Calculate the following on the data we read in from the `wild.metadata.txt` file that we discussed in class on 9/16/2014.
+
+  * How many samples were described in the `wild.metadata.txt`? 
+  
+  There were *__`r n.total`__* samples described.
+  
+  * How many columns are in the table? What are their names?
+  
+  There are *__`r ncol(metadata)`__* columns in the table.
+  Their names are *__`r colnames(metadata)`__*
+  
+
+  
+  * How many samples came from mice that weighed 15 or more grams?
+```{r}
+five.teen <- metadata$Weight >= "15.0" #all samples weighing 15.0g or more
+n.grfiveteen <- nrow(metadata[five.teen,]) #number of samples 15.0g or more
+```
+  There were *__`r n.grfiveteen`__* samples from mice >= 15.0g.
+  
+  
+```{r}
+ave.weight <- sum(metadata$Weight)/n.total #average weight
+med.weight <- median(metadata$Weight)  #median
+```
+  * What is the median weight of the samples?
+  *__`r med.weight`__* is the median weight of all samples and *__`r ave.weight`__* is the average.
+  
+```{r}
+tot.PMG <- metadata$SP=="PMG" #all PMG mice
+n.PMG <- nrow(metadata[tot.PMG,]) #number of PNG mice
+
+Fem.PL <- metadata$SP == "PL" & metadata$Sex == "F"  #female PL mice 
+n.fempl <- nrow(metadata[Fem.PL,]) #number of female PL mice
+```  
+  * How many PMG samples were there?
+  
+  There were *__`r n.PMG`__* PMG mice samples.
+  
+  * How many female PL samples were there?
+  
+  There were *__`r n.fempl`__* female PL samples.
+ 
+```{r}
+order.ET <- order(metadata$ET) #order of samples by ET
+sortby.ET <- metadata[order.ET, ] #metadata sorted by ET
+sortby.ET15 <- sortby.ET[1:5, ] #shows rows 1-5 sorted by ET
+```
+  * Alphabetize `wild.metadata.txt` by the ear tag number (only show the first 5 rows of the table)
+```{r}
+sortby.ET15
+```
+
+  
+  * Sort the table by the weight of the mice that each sample came from
+```{r}
+order.Weight <- order(metadata$Weight) #order of samples by Weight
+sortby.Weight <- metadata[order.Weight, ] #metadata sorted by Weight
+sortby.Weight[1:5, ]
+```
+
+  * The `Station` column indicates where the mice were sampled. Where were the most mice captured?
+```{r}
+order.Station <- order(metadata$Station) #order of samples by ET
+sortby.Station <- metadata[order.Station, ]
+summary(sortby.Station)
+mode.Station <- "N20"
+tot.N20 <- metadata$Station=="N20" #all Station N20 mice
+n.N20 <- nrow(metadata[tot.N20, ]) #number of Station N20 mice
+
+modeav <- function (x, method = "mode", na.rm = FALSE)
+{
+    x <- unlist(x)
+    if (na.rm)
+    x <- x[!is.na(x)]
+    u <- unique(x)
+    n <- length(u)
+#get frequencies of each of the unique values in the vector
+    frequencies <- rep(0, n)
+    for (i in seq_len(n)) {
+        if (is.na(u[i])) {
+            frequencies[i] <- sum(is.na(x))
+        }
+        else {
+            frequencies[i] <- sum(x == u[i], na.rm = TRUE)
+        }
+    }
+#mode if a unimodal vector, else NA
+    if (method == "mode" | is.na(method) | method == "")
+        {return(ifelse(length(frequencies[frequencies==max(frequencies)])>1,NA,u[which.max(frequencies)]))}
+#number of modes
+    if (method == "modes" | method == "modevalues")
+        {return(length(frequencies[frequencies==max(frequencies)]))}
+#list of all modes
+    if(method == "nmode" | method == "nmodes")
+        {return(u[which(frequencies==max(frequencies), arr.ind = FALSE, useNames = FALSE)])}
+#error trap the method
+    warning("Warning: method not recognised.  Valid methods are 'mode' [default], 'nmodes' and 'modes'")
+    return()
+} #found at 'http://stackoverflow.com/revisions/15620958/1'
+
+mode.Station <- modeav(metadata$Station, method="nmode") #reassigns mode.Station using modeav function
+```
+The most mice were captured at *__Station `r mode.Station`__*
+
+  * How many mice were captured there?
+
+There were *__`r n.N20`__* captured there.
+
+2.	Describe what each of the following commands does in a text block above the code, be specific. Put the code into the appropriate knitr code chunk. If something throws an error or looks weird, fix it.
+
+Creates a sequence of numbers from 1 to 100 by 3s.
+```{r}
+seq(1,100,3)
+```
+
+Creates 10 repeats of "a, b"
+```{r}
+rep(c("a","b"),10)
+```
+
+Creates a random list of numbers from 1-10
+```{r}
+r <- runif(10); order(r)
+```
+
+Gives the remainder of dividing 100 by 3
+```{r}
+100 %% 3
+```
+
+Displays a table from 'wild.metadata.txt' featuring all samples from PMG mice weighing 16g
+
+```{r}
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
+```
+
+
+3.	Calculate the mode for the weights in `wild.metadata.txt`
+```{r} 
+modeav <- function (x, method = "mode", na.rm = FALSE)
+{
+    x <- unlist(x)
+    if (na.rm)
+    x <- x[!is.na(x)]
+    u <- unique(x)
+    n <- length(u)
+#get frequencies of each of the unique values in the vector
+    frequencies <- rep(0, n)
+    for (i in seq_len(n)) {
+        if (is.na(u[i])) {
+            frequencies[i] <- sum(is.na(x))
+        }
+        else {
+            frequencies[i] <- sum(x == u[i], na.rm = TRUE)
+        }
+    }
+#mode if a unimodal vector, else NA
+    if (method == "mode" | is.na(method) | method == "")
+        {return(ifelse(length(frequencies[frequencies==max(frequencies)])>1,NA,u[which.max(frequencies)]))}
+#number of modes
+    if (method == "modes" | method == "modevalues")
+        {return(length(frequencies[frequencies==max(frequencies)]))}
+#list of all modes
+    if(method == "nmode" | method == "nmodes")
+        {return(u[which(frequencies==max(frequencies), arr.ind = FALSE, useNames = FALSE)])}
+#error trap the method
+    warning("Warning: method not recognised.  Valid methods are 'mode' [default], 'nmodes' and 'modes'")
+    return()
+} #found at 'http://stackoverflow.com/revisions/15620958/1'
+modeav(metadata$Weight, method="nmode")
+```
+The modes for weight were *__`r modeav(metadata$Weight, method="nmode")`__*
+
+4.	Usign R commands, write the table to a new text file, but exclude the `Ear` and `Repro` columns.
+```{r} 
+metadata.ear <- metadata[,-9] #removes Ear column
+metadata.repro <- metadata.ear[,-7] #removes Repro from metadata.ear
+write.table(metadata.repro, file= "metadata_sansEarRepro.txt")
+metadata.sansRE <- read.table(file="~/assignment02/metadata_sansEarRepro.txt", header=T)
+metadata.sansRE[1:5, ]
+```
