@@ -1,0 +1,133 @@
+---
+title: "assignment2"
+output: html_document
+---
+
+
+
+This is Kaitlin's R Markdown file for Assignment 2
+
+```{r}
+metadata <- read.table(file="wild.metadata.txt", header=T)
+rownames(metadata) <- metadata$Group
+metadata <- metadata[,-1]
+```
+
+Assignment answers:
+
+1. Data stats
+
+- There are `r nrow(metadata)` samples described in this dataset.
+
+- There are `r ncol(metadata)` columns in this dataset and their names are `r colnames(metadata)`.
+
+```{r}
+weight <- metadata[8]
+weight15 <- weight[weight >= 15]
+```
+
+- There are `r length(weight15)` samples from mice that weighed 15 or more grams. 
+
+- The median weight of the samples is `r apply(weight, 2, median)`. 
+
+```{r}
+sp4 <- metadata[4]
+sp4 <- sp4[sp4 == "PMG"]
+```
+
+-There are `r length(sp4)` PMG samples. 
+
+```{r}
+#subsets metadata into two columns of interest
+sp.sex <- subset(metadata, select = c("SP", "Sex"))
+#indexes for conditionals
+sselect <- subset(sp.sex, SP == "PL" & Sex == "F")
+#creates number of selected outputs as a list to do length() on
+s.select <- sselect[sselect == "PL"]
+```
+
+- There are `r length(s.select)` female PL samples.
+
+```{r}
+earorder <- order(metadata[[9]])
+eardata <- metadata[earorder,]
+
+```
+
+- The matrix has been ordered by ear tag number and a sample is shown here 
+
+```{r}
+head(eardata)
+```
+
+```{r}
+weightorder <- order(metadata[[8]])
+weightdata <- metadata[weightorder,]
+
+```
+
+- The matrix has been ordered by weight and a sample is shown here:
+```{r}
+head(weightdata)
+```
+
+```{r}
+stationorder <- order(metadata[[3]])
+stationdata <- metadata[stationorder,]
+
+temp <- table(as.vector(metadata[3]))
+Nstation <- names(temp) [temp == max(temp)]
+nmice <- subset(metadata, Station == Nstation)
+
+```
+
+- The most mice were captured at `r Nstation` and there were `r nrow(nmice)` captured there. 
+
+The following code chunks perform the following operations:
+
+This creates a sequence of numbers starting at 1, counting by 3s and going up to 100. 
+```{r}
+seq(1,100, 3)
+```
+
+Repeats a list of "a""b" ten times.
+```{r}
+rep(c("a","b"),10)
+```
+
+This generates 10 random deviations, order tells you which order they should be in 
+```{r}
+r <- runif(10); order(r)
+```
+
+Gives the remainder for 100 divided by 3
+```{r}
+100 %% 3
+```
+
+This code creates a matrix of the samples that have both weights of 16 and are SP PMG. 
+```{r}
+metadata[metadata$Weight==16 & metadata$SP=="PMG",]
+```
+
+Calculate the mode of weights for the metadata file:
+
+```{r}
+weighttemp <- table(as.vector(metadata[8]))
+Nweight <- names(weighttemp) [weighttemp == max(weighttemp)]
+```
+ The mode is `r Nweight`. 
+
+To write this table to a new file and exclude columns, I defined the columns we didn't want anymore as NULL
+
+```{r}
+metadata2 <- metadata 
+metadata2$Repro <- NULL
+metadata2$Ear <- NULL
+write.table(metadata2, file = "noears.txt")
+``` 
+
+
+
+
+
